@@ -3,762 +3,653 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rudhra Medical &mdash; Order Medicines in 3 Taps</title>
+<title>Rudhra Medical &mdash; India's Trusted Online Pharmacy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --green:#0E8A4F;
-  --green-dark:#0A6B3D;
-  --green-dim:#E4F4EC;
-  --blue:#0B6BB0;
-  --blue-dark:#084F84;
-  --blue-dim:#E3EFF9;
-  --red:#D92D20;
-  --red-dim:#FCE8E6;
-  --ink:#0F2530;
-  --bg:#F3F8FA;
-  --surface:#FFFFFF;
-  --surface-2:#E8F1F5;
-  --border:rgba(15,50,70,.13);
-  --text-dim:#5C7480;
-  --shadow:0 1px 2px rgba(15,50,70,.06),0 10px 30px rgba(15,50,70,.08);
-  --shadow-lg:0 20px 50px rgba(15,50,70,.16);
-  --r:18px;
+  --g:#00A98F;          /* primary green */
+  --g-dark:#0C8A74;
+  --g-soft:#E8F7F3;
+  --red:#E63946;        /* SAFE badge / discount */
+  --red-soft:#FDECEE;
+  --ink:#1F2A30;
+  --muted:#6B7B82;
+  --line:#E6ECEF;
+  --bg:#FFFFFF;
+  --soft:#F6FAF9;
+  --shadow:0 2px 10px rgba(16,50,45,.06);
+  --shadow-lg:0 8px 28px rgba(16,50,45,.14);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:'Plus Jakarta Sans','Noto Sans Devanagari',system-ui,-apple-system,sans-serif;
-  background:var(--bg);color:var(--ink);line-height:1.5;
+  font-family:'Inter Tight','Noto Sans Devanagari',system-ui,-apple-system,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.45;
   -webkit-font-smoothing:antialiased;
 }
-.mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
-.wrap{max-width:1200px;margin:0 auto;padding:0 18px}
-button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1220px;margin:0 auto;padding:0 18px}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
-::selection{background:var(--green-dim)}
+::-webkit-scrollbar{height:8px;width:8px}
+::-webkit-scrollbar-thumb{background:#cfe0dc;border-radius:8px}
 
-/* ============ ANNOUNCE ============ */
-.announce{background:var(--green-dark);color:#DCF0E4;font-size:12.5px}
-.announce .wrap{display:flex;justify-content:center;gap:8px;padding:6px 18px;flex-wrap:wrap;text-align:center}
-.announce b{color:#fff}
+/* ================= TOP STRIP ================= */
+.topstrip{background:var(--soft);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.topstrip .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:7px 18px;flex-wrap:wrap}
+.topstrip b{color:var(--ink)}
+.topstrip .r{display:flex;gap:16px;align-items:center}
+.topstrip a{font-weight:600;color:var(--g-dark)}
 
-/* ============ HEADER ============ */
-header{position:sticky;top:0;z-index:60;background:rgba(243,248,250,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.head{display:flex;align-items:center;gap:14px;padding:11px 18px}
-.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);flex:none}
-.brand .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(150deg,var(--green),var(--blue));display:grid;place-items:center;box-shadow:var(--shadow);flex:none}
-.brand .mark svg{width:26px;height:26px}
-.brand .wm{display:flex;flex-direction:column;line-height:1}
-.brand .wm b{font-weight:800;font-size:20px;letter-spacing:-.02em}
-.brand .wm small{font-size:9.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--green);font-weight:700;margin-top:3px}
-.head .spacer{flex:1}
-.eta{display:flex;align-items:center;gap:7px;background:var(--green-dim);color:var(--green-dark);border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:700;flex:none}
-.eta .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:ping 2.4s infinite}
-@keyframes ping{0%{box-shadow:0 0 0 0 rgba(14,138,79,.45)}70%{box-shadow:0 0 0 7px rgba(14,138,79,0)}100%{box-shadow:0 0 0 0 rgba(14,138,79,0)}}
-.lang{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:3px;flex:none}
-.lang button{border:none;background:none;padding:6px 11px;border-radius:8px;font-weight:800;font-size:12.5px;color:var(--text-dim)}
-.lang button.active{background:var(--blue);color:#fff}
-.cart-pill{position:relative;display:flex;align-items:center;gap:9px;background:var(--green);color:#fff;border:none;border-radius:13px;padding:11px 17px;font-weight:800;font-size:14px;transition:background .15s,transform .1s;flex:none}
-.cart-pill:hover{background:var(--green-dark)}
-.cart-pill:active{transform:scale(.97)}
-.cart-pill svg{width:19px;height:19px}
-.cart-pill .badge{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;font-size:11px;font-weight:800;min-width:21px;height:21px;border-radius:11px;display:grid;place-items:center;padding:0 5px;border:2px solid var(--bg)}
-.head .searchwrap{flex:1;position:relative;min-width:0;display:flex}
-.head .searchwrap input{width:100%;padding:11px 42px 11px 40px;border:1px solid var(--border);border-radius:13px;background:var(--surface);font-family:inherit;font-size:14.5px;color:var(--ink)}
-.head .searchwrap input:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
-.head .searchwrap>svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;opacity:.45}
-.mic{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:none;background:var(--surface-2);width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--green-dark)}
-.mic svg{width:15px;height:15px}
-.mic.on{background:var(--green);color:#fff;animation:pulse .9s infinite}
-@keyframes pulse{50%{opacity:.5}}
+/* ================= HEADER ================= */
+header{position:sticky;top:0;z-index:80;background:#fff;box-shadow:var(--shadow)}
+.hrow{display:flex;align-items:center;gap:18px;padding:12px 18px}
+.logo{display:flex;align-items:center;gap:9px;flex:none}
+.logo .mk{width:36px;height:36px;border-radius:9px;background:var(--g);display:grid;place-items:center;flex:none}
+.logo .mk svg{width:21px;height:21px}
+.logo b{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.logo b span{color:var(--g);margin-left:5px}
+.logo small{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:-2px}
+nav.mainnav{display:flex;gap:22px;flex:1;overflow-x:auto;scrollbar-width:none}
+nav.mainnav::-webkit-scrollbar{display:none}
+nav.mainnav a{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#46575e;white-space:nowrap;padding:4px 0;border-bottom:2px solid transparent}
+nav.mainnav a:hover,nav.mainnav a.active{color:var(--g-dark);border-color:var(--g)}
+.hright{display:flex;align-items:center;gap:14px;flex:none}
+.hlink{font-size:13.5px;font-weight:700;color:#46575e}
+.hlink:hover{color:var(--g-dark)}
+.lang{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:2px}
+.lang button{padding:5px 9px;border-radius:6px;font-weight:800;font-size:12px;color:var(--muted)}
+.lang button.active{background:var(--g);color:#fff}
+.cartbtn{display:flex;align-items:center;gap:8px;background:var(--g);color:#fff;border-radius:9px;padding:9px 15px;font-weight:800;font-size:13.5px;position:relative}
+.cartbtn:hover{background:var(--g-dark)}
+.cartbtn svg{width:17px;height:17px}
+.cartbtn .bdg{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-size:10.5px;font-weight:800;min-width:19px;height:19px;border-radius:10px;display:grid;place-items:center;padding:0 4px;border:2px solid #fff}
 
-/* ============ HERO ============ */
-.hero{padding:24px 0 6px}
-.hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:20px;align-items:stretch}
-.hero-card{background:linear-gradient(150deg,#0A6B3D 0%,#0B6BA0 60%,#084F84 100%);border-radius:26px;padding:32px;color:#EAF5F0;position:relative;overflow:hidden}
-.hero-card::after{content:"";position:absolute;right:-70px;top:-70px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 68%)}
-.hero-card::before{content:"";position:absolute;left:-60px;bottom:-120px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%)}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:6px 14px;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#DCF0E4;position:relative}
-.hero-card h1{font-weight:800;font-size:clamp(28px,4vw,46px);line-height:1.04;letter-spacing:-.025em;margin-top:16px;position:relative;max-width:560px}
-.hero-card h1 em{font-style:normal;color:#A7E3C4}
-.hero-card p{margin-top:14px;font-size:15.5px;color:#CDE4EE;max-width:520px;position:relative}
+/* search row */
+.searchrow{background:#fff;border-top:1px solid var(--line)}
+.searchrow .wrap{display:flex;align-items:center;gap:12px;padding:11px 18px}
+.city{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:13.5px;font-weight:600;color:#46575e;flex:none;cursor:pointer;background:#fff}
+.city svg{width:15px;height:15px;color:var(--g)}
+.city:hover{border-color:var(--g)}
+.sbox{flex:1;display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:8px;padding:0 14px;min-width:0;background:#fff}
+.sbox:focus-within{border-color:var(--g);box-shadow:0 0 0 3px var(--g-soft)}
+.sbox svg{width:18px;height:18px;color:var(--muted);flex:none}
+.sbox input{flex:1;border:none;outline:none;padding:11px 0;font-size:14.5px;font-family:inherit;color:var(--ink);min-width:0;background:none}
+.quickbuy{display:flex;align-items:center;gap:10px;background:var(--g-soft);border:1px solid #BFE7DE;border-radius:8px;padding:7px 10px 7px 14px;flex:none}
+.quickbuy span{font-size:12.5px;font-weight:700;color:var(--g-dark)}
+.quickbuy span small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+.quickbuy button{background:var(--g);color:#fff;border-radius:7px;padding:8px 13px;font-weight:800;font-size:12.5px;white-space:nowrap}
+.quickbuy button:hover{background:var(--g-dark)}
 
-.order-box{margin-top:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:14px;position:relative;backdrop-filter:blur(4px)}
-.order-box label{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#BFE3D2;display:block;margin-bottom:8px}
-.ob-row{display:flex;gap:10px;flex-wrap:wrap}
-.ob-search{flex:1;min-width:180px;display:flex;align-items:center;gap:9px;background:#fff;border-radius:12px;padding:0 14px}
-.ob-search svg{width:18px;height:18px;color:var(--green);flex:none}
-.ob-search input{flex:1;border:none;background:none;padding:13px 0;font-family:inherit;font-size:15px;color:var(--ink);min-width:0}
-.ob-search input:focus{outline:none}
-.btn{border:none;border-radius:12px;padding:13px 18px;font-weight:800;font-size:14.5px;display:inline-flex;align-items:center;gap:8px;transition:transform .1s,background .15s;text-decoration:none}
-.btn:active{transform:scale(.97)}
-.btn-rx{background:#fff;color:var(--green-dark)}
-.btn-rx:hover{background:#EAF5F0}
-.btn svg{width:18px;height:18px}
+/* ================= HERO / PRESCRIPTION ================= */
+.hero{padding:16px 0 0}
+.hero-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:14px}
+.promo{border-radius:14px;padding:26px 28px;color:#fff;position:relative;overflow:hidden;background:linear-gradient(120deg,#0C8A74,#00A98F)}
+.promo::after{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.12)}
+.promo h1{font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1.12;position:relative;max-width:520px}
+.promo p{margin-top:10px;font-size:14.5px;color:#DDF3EE;position:relative;max-width:460px}
+.promo .btns{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;position:relative}
+.btn{border-radius:9px;padding:12px 20px;font-weight:800;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-w{background:#fff;color:var(--g-dark)}
+.btn-w:hover{background:#F0FAF7}
+.btn-o{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btn-o:hover{background:rgba(255,255,255,.25)}
+.btn svg{width:17px;height:17px}
+.sidebanner{border-radius:14px;border:1px solid var(--line);background:linear-gradient(160deg,#FFF,#F6FAF9);padding:22px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow)}
+.sidebanner .ic{width:44px;height:44px;border-radius:11px;background:var(--g-soft);display:grid;place-items:center;margin-bottom:12px}
+.sidebanner .ic svg{width:24px;height:24px;color:var(--g-dark)}
+.sidebanner h3{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.sidebanner p{font-size:13px;color:var(--muted);margin-top:5px}
+.sidebanner button{margin-top:14px;background:var(--g);color:#fff;border-radius:9px;padding:11px;font-weight:800;font-size:13.5px;width:100%}
+.sidebanner button:hover{background:var(--g-dark)}
 
-.steps{display:flex;gap:0;margin-top:20px;position:relative;flex-wrap:wrap}
-.step{flex:1;min-width:110px;position:relative}
-.step .n{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);display:grid;place-items:center;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:13px;color:#DCF0E4}
-.step h4{font-size:13.5px;font-weight:700;margin-top:9px;color:#fff}
-.step p{font-size:12px;color:#BFD8E4;margin-top:2px;max-width:150px}
-.step:not(:last-child)::after{content:"";position:absolute;top:14px;right:6px;left:40px;height:1px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 5px,transparent 5px 10px)}
+/* ================= SECTION ================= */
+section.blk{margin-top:30px}
+.blk-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:15px}
+.blk-head h2{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.blk-head .sub{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
+.blk-head .seeall{font-size:13.5px;font-weight:800;color:var(--g-dark);white-space:nowrap}
+.blk-head .seeall:hover{text-decoration:underline}
 
-/* Side tiles */
-.side{display:flex;flex-direction:column;gap:14px}
-.side-card{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:20px;box-shadow:var(--shadow);flex:1;display:flex;flex-direction:column}
-.side-card h3{font-weight:800;font-size:17px;letter-spacing:-.01em}
-.side-card .sub{font-size:12.5px;color:var(--text-dim);margin-top:2px}
-.reorder{margin-top:14px;background:var(--surface-2);border-radius:14px;padding:13px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.reorder .ri{flex:1;min-width:120px}
-.reorder .ri b{font-size:14px;display:block}
-.reorder .ri span{font-size:12px;color:var(--text-dim)}
-.reorder button{background:var(--green);color:#fff;border:none;border-radius:11px;padding:10px 15px;font-weight:800;font-size:13.5px;white-space:nowrap}
-.reorder button:hover{background:var(--green-dark)}
-.rxcard{background:linear-gradient(150deg,var(--blue-dim),#F4FAFE);border-color:#C9E2F2}
-.rxcard h3{color:var(--blue-dark)}
-.rxcard .up{margin-top:14px;border:1.6px dashed var(--blue);border-radius:14px;padding:16px;text-align:center;background:rgba(255,255,255,.6)}
-.rxcard .up svg{width:30px;height:30px;color:var(--blue);margin:0 auto 8px}
-.rxcard .up p{font-size:12.5px;color:#2C5B7E}
-.rxcard button{width:100%;margin-top:12px;background:var(--blue);color:#fff;border:none;border-radius:12px;padding:12px;font-weight:800;font-size:14px}
-.rxcard button:hover{background:var(--blue-dark)}
+/* health concerns */
+.concerns{display:grid;grid-template-columns:repeat(9,1fr);gap:10px}
+.concern{display:flex;flex-direction:column;align-items:center;gap:9px;padding:8px 4px;border-radius:12px;transition:background .15s;text-align:center}
+.concern:hover{background:var(--soft)}
+.concern .ci{width:60px;height:60px;border-radius:50%;background:var(--g-soft);display:grid;place-items:center;border:1px solid #D8EFE9}
+.concern .ci svg{width:28px;height:28px;color:var(--g-dark)}
+.concern span{font-size:12px;font-weight:700;color:#37474e;line-height:1.25}
 
-/* Sections */
-.sec{margin-top:32px}
-.sec-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap}
-.sec-head h3{font-weight:800;font-size:22px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
-.sec-head h3 .line{width:26px;height:3px;border-radius:2px;background:var(--green)}
-.sec-head .hint{font-size:13px;color:var(--text-dim);font-weight:600}
+/* horizontal scroller */
+.hscroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.hscroll>*{scroll-snap-align:start;flex:none}
 
-/* Quick symptom chips */
-.chips{display:flex;gap:9px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.qchip{white-space:nowrap;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:9px 15px 9px 11px;font-weight:700;font-size:13.5px;color:var(--ink);transition:all .15s;flex:none}
-.qchip:hover{border-color:var(--green);background:var(--green-dim)}
-.qchip .qi{width:26px;height:26px;border-radius:8px;background:var(--green-dim);display:grid;place-items:center;flex:none}
-.qchip .qi svg{width:15px;height:15px;color:var(--green-dark)}
-.qchip small{color:var(--text-dim);font-weight:600;font-size:11.5px}
+/* checkup card */
+.chk{width:250px;border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
+.chk:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.chk .tagline{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.safe{background:var(--red);color:#fff;border-radius:4px;padding:1px 5px;font-size:9.5px;font-weight:800;letter-spacing:.03em}
+.chk h4{font-size:14.5px;font-weight:800;margin-top:9px;line-height:1.3;min-height:38px}
+.chk .lab{font-size:11.5px;color:var(--muted);margin-top:6px}
+.chk .pr{display:flex;align-items:baseline;gap:8px;margin-top:11px;flex-wrap:wrap}
+.chk .pr .p{font-size:17px;font-weight:800}
+.chk .pr .m{font-size:12px;color:var(--muted);text-decoration:line-through}
+.chk .pr .d{font-size:11px;font-weight:800;color:var(--red);background:var(--red-soft);padding:2px 6px;border-radius:5px}
+.chk .bk{margin-top:12px;width:100%;border:1.5px solid var(--g);color:var(--g-dark);border-radius:8px;padding:8px;font-weight:800;font-size:12.5px;background:var(--g-soft)}
+.chk .bk:hover{background:var(--g);color:#fff}
 
-/* Category */
-.catbar{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;margin-bottom:16px}
-.catbar::-webkit-scrollbar{display:none}
-.chip{white-space:nowrap;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);border-radius:999px;padding:8px 15px;font-size:13px;font-weight:700;transition:all .15s;flex:none}
-.chip:hover{border-color:var(--green);color:var(--green-dark)}
-.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+/* product card */
+.pcard{width:210px;border:1px solid var(--line);border-radius:13px;background:#fff;display:flex;flex-direction:column;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.pcard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.pcard .img{height:150px;background:linear-gradient(150deg,#F2F8F6,#E4F0EC);display:grid;place-items:center;position:relative}
+.pcard .img svg{width:54px;height:54px;color:var(--g);opacity:.45}
+.pcard .rx{position:absolute;top:8px;left:8px;background:var(--red-soft);color:var(--red);font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:.03em}
+.pcard .body{padding:11px 12px 13px;display:flex;flex-direction:column;flex:1}
+.pcard h4{font-size:13.5px;font-weight:700;line-height:1.3;min-height:35px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcard .pack{font-size:11.5px;color:var(--muted);margin-top:3px}
+.rating{display:inline-flex;align-items:center;gap:3px;background:#F2F8F6;border:1px solid #DDEDE8;border-radius:5px;padding:1px 6px;font-size:11px;font-weight:700;color:#2E7D63;margin-top:7px;align-self:flex-start}
+.rating svg{width:10px;height:10px;fill:var(--g)}
+.pcard .pr{display:flex;align-items:baseline;gap:7px;margin-top:auto;padding-top:10px;flex-wrap:wrap}
+.pcard .pr .p{font-size:16px;font-weight:800}
+.pcard .pr .m{font-size:11.5px;color:var(--muted);text-decoration:line-through}
+.pcard .pr .d{font-size:10.5px;font-weight:800;color:var(--red)}
+.pcard .add{margin-top:10px;width:100%;border:1.5px solid var(--g);color:var(--g-dark);background:var(--g-soft);border-radius:8px;padding:8px;font-weight:800;font-size:12.5px;transition:all .15s}
+.pcard .add:hover,.pcard .add.done{background:var(--g);color:#fff}
+.pcard .getby{font-size:10.5px;font-weight:700;color:var(--g-dark);margin-top:8px;display:flex;align-items:center;gap:4px}
+.pcard .getby svg{width:11px;height:11px}
 
-/* Products */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:15px}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;min-width:0}
-.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.thumb{height:118px;background:linear-gradient(150deg,var(--surface-2),#DDEAF1);display:grid;place-items:center;position:relative}
-.thumb svg{width:46px;height:46px;color:var(--blue);opacity:.5}
-.tag{position:absolute;top:9px;left:9px;font-size:10px;font-weight:800;letter-spacing:.03em;padding:3px 8px;border-radius:7px;text-transform:uppercase}
-.tag.rx{background:var(--red-dim);color:var(--red)}
-.tag.otc{background:var(--green-dim);color:var(--green-dark)}
-.catp{position:absolute;top:9px;right:9px;background:rgba(255,255,255,.92);color:var(--text-dim);font-size:10px;font-weight:700;padding:3px 8px;border-radius:7px}
-.cbody{padding:12px 13px 14px;display:flex;flex-direction:column;flex:1}
-.cbody h4{font-size:14px;font-weight:700;line-height:1.3;letter-spacing:-.01em}
-.cbody .pack{font-size:11.5px;color:var(--text-dim);margin-top:2px}
-.stock{font-size:11px;font-weight:700;color:var(--green-dark);margin-top:5px;display:flex;align-items:center;gap:5px}
-.stock .d{width:6px;height:6px;border-radius:50%;background:var(--green)}
-.prow{display:flex;align-items:baseline;gap:7px;margin-top:auto;padding-top:11px}
-.price{font-size:17.5px;font-weight:800;letter-spacing:-.02em}
-.mrp{font-size:12px;color:var(--text-dim);text-decoration:line-through}
-.off{font-size:10.5px;font-weight:800;color:var(--blue-dark);background:var(--blue-dim);padding:2px 6px;border-radius:6px;margin-left:auto}
-.add{margin-top:10px;width:100%;border:1.6px solid var(--green);background:var(--green-dim);color:var(--green-dark);border-radius:11px;padding:9px;font-weight:800;font-size:13.5px;transition:all .15s}
-.add:hover{background:var(--green);color:#fff}
-.add.done{background:var(--green);color:#fff;border-color:var(--green)}
-.empty{grid-column:1/-1;text-align:center;padding:46px 20px;color:var(--text-dim)}
-.empty svg{width:42px;height:42px;opacity:.3;margin:0 auto 12px}
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.cat{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 8px;border:1px solid var(--line);border-radius:12px;text-align:center;transition:all .15s;background:#fff}
+.cat:hover{border-color:var(--g);background:var(--soft)}
+.cat .ic{width:52px;height:52px;border-radius:50%;background:var(--g-soft);display:grid;place-items:center}
+.cat .ic svg{width:25px;height:25px;color:var(--g-dark)}
+.cat span{font-size:12.5px;font-weight:700;color:#37474e;line-height:1.25}
 
-/* Trust */
-.trust{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:32px}
-.tbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
-.tbox svg{width:22px;height:22px;color:var(--green);margin-bottom:9px}
-.tbox h5{font-size:14.5px;font-weight:800;margin-bottom:3px}
-.tbox p{font-size:12.5px;color:var(--text-dim)}
+/* order on call */
+.oncall{margin-top:30px;border-radius:16px;background:linear-gradient(120deg,#0C8A74,#00A98F);padding:26px 30px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+.oncall::after{content:"";position:absolute;right:-50px;bottom:-80px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.10)}
+.oncall .txt h3{font-size:20px;font-weight:800;position:relative}
+.oncall .txt p{font-size:13.5px;color:#DDF3EE;margin-top:4px;position:relative}
+.oncall .form{display:flex;gap:8px;position:relative;flex-wrap:wrap}
+.oncall .form .cc{background:#fff;border-radius:8px;padding:0 12px;display:flex;align-items:center;font-weight:800;color:var(--ink);font-size:14px}
+.oncall .form input{border:none;border-radius:8px;padding:12px 14px;font-family:inherit;font-size:14px;min-width:170px;color:var(--ink);outline:none}
+.oncall .form button{background:#fff;color:var(--g-dark);border-radius:8px;padding:12px 20px;font-weight:800;font-size:14px}
+.oncall .form button:hover{background:#EAF7F4}
 
-/* Note */
-.note{background:var(--blue-dim);border:1px solid #C9E2F2;border-radius:var(--r);padding:15px 17px;font-size:12.5px;color:#20506E;display:flex;gap:11px;margin-top:24px;align-items:flex-start}
-.note svg{width:19px;height:19px;flex:none;margin-top:1px;color:var(--blue)}
-.note b{color:var(--red)}
-
-/* Footer */
-footer{background:#0B2530;color:#A9C2CD;margin-top:38px;padding:34px 0 26px}
-.fgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:26px}
-footer h6{color:#fff;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:11px}
-footer p,footer a{font-size:13px;color:#A9C2CD;text-decoration:none;display:block;margin-bottom:7px}
+/* ================= FOOTER ================= */
+footer{background:#0F2A28;color:#A9C2BD;margin-top:36px;padding:36px 0 0}
+.fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+footer h6{color:#fff;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+footer a,footer p{font-size:13px;color:#A9C2BD;display:block;margin-bottom:8px}
 footer a:hover{color:#fff}
-footer .fbrand b{font-weight:800;font-size:20px;color:#fff;display:block;margin-bottom:6px}
-.fbot{border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding-top:16px;font-size:12px;color:#7C99A5;text-align:center}
+footer .brandf b{font-size:20px;font-weight:800;color:#fff;display:block;margin-bottom:8px}
+footer .brandf b span{color:#4FD1B5;margin-left:5px}
+footer .brandf p{font-size:12.5px;line-height:1.5}
+.fbot{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding:16px 0;font-size:12px;color:#7E9A95;text-align:center}
 
-/* Cart drawer */
-.overlay{position:fixed;inset:0;background:rgba(11,37,48,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:90}
+/* ================= CART DRAWER ================= */
+.overlay{position:fixed;inset:0;background:rgba(15,42,40,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:90}
 .overlay.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(430px,100%);background:var(--surface);z-index:100;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-12px 0 44px rgba(11,37,48,.28)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:#fff;z-index:100;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(15,42,40,.25)}
 .drawer.open{transform:none}
-.dhead{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
-.dhead h3{font-weight:800;font-size:19px}
-.dhead .x{background:none;border:none;font-size:26px;line-height:1;color:var(--text-dim);padding:4px}
-.items{flex:1;overflow-y:auto;padding:6px 20px}
-.ci{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--border);align-items:center}
-.ci .ct{width:44px;height:44px;border-radius:11px;background:var(--surface-2);display:grid;place-items:center;flex:none}
-.ci .ct svg{width:22px;height:22px;color:var(--blue);opacity:.6}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+.dh h3{font-size:17px;font-weight:800}
+.dh .x{font-size:26px;color:var(--muted);line-height:1;padding:2px}
+.items{flex:1;overflow-y:auto;padding:4px 20px}
+.ci{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:center}
+.ci .ct{width:46px;height:46px;border-radius:9px;background:var(--soft);display:grid;place-items:center;flex:none}
+.ci .ct svg{width:23px;height:23px;color:var(--g);opacity:.6}
 .ci .info{flex:1;min-width:0}
-.ci .info h5{font-size:13.5px;font-weight:700;line-height:1.25}
-.ci .info span{font-size:12px;color:var(--text-dim)}
-.qty{display:flex;align-items:center;border:1px solid var(--border);border-radius:9px;overflow:hidden;flex:none}
-.qty button{width:28px;height:28px;border:none;background:var(--surface-2);font-size:16px;font-weight:700;color:var(--green-dark)}
-.qty button:hover{background:var(--green-dim)}
-.qty span{width:26px;text-align:center;font-size:13.5px;font-weight:800}
-.dfoot{padding:16px 20px 20px;border-top:1px solid var(--border);background:var(--surface)}
-.tr{display:flex;justify-content:space-between;font-size:13.5px;color:var(--text-dim);margin-bottom:5px}
-.tr.grand{font-size:19px;font-weight:800;color:var(--ink);margin:9px 0 15px}
-.wa{width:100%;background:#1FA855;color:#fff;border:none;border-radius:13px;padding:15px;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s}
+.ci .info h5{font-size:13px;font-weight:700;line-height:1.25}
+.ci .info span{font-size:12px;color:var(--muted)}
+.qty{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.qty button{width:26px;height:26px;background:var(--soft);font-size:15px;font-weight:800;color:var(--g-dark)}
+.qty button:hover{background:var(--g-soft)}
+.qty span{width:24px;text-align:center;font-size:13px;font-weight:800}
+.df{padding:16px 20px 20px;border-top:1px solid var(--line)}
+.tr{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:5px}
+.tr.g{font-size:18px;font-weight:800;color:var(--ink);margin:8px 0 14px}
+.wa{width:100%;background:#1FA855;color:#fff;border-radius:10px;padding:14px;font-weight:800;font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:9px}
 .wa:hover{background:#178A44}
-.wa:disabled{background:#C9D3D7;cursor:not-allowed}
-.wa svg{width:19px;height:19px}
-.ecart{text-align:center;padding:60px 20px;color:var(--text-dim)}
-.ecart svg{width:46px;height:46px;opacity:.28;margin:0 auto 12px}
-.paynote{font-size:11.5px;color:var(--text-dim);text-align:center;margin-top:9px}
+.wa:disabled{background:#C6D2CF;cursor:not-allowed}
+.wa svg{width:18px;height:18px}
+.pn{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+.ecart{text-align:center;padding:60px 20px;color:var(--muted)}
+.ecart svg{width:44px;height:44px;opacity:.25;margin:0 auto 12px}
 
-/* Mobile bar */
-.mbar{display:none}
-
-/* Toast */
-.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:13px;font-size:13.5px;font-weight:700;z-index:200;opacity:0;transition:all .3s;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:9px;max-width:90vw}
-.toast svg{width:17px;height:17px;color:#6BD39A;flex:none}
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:200;opacity:0;transition:all .3s;box-shadow:var(--shadow-lg);max-width:90vw}
 .toast.show{transform:translateX(-50%);opacity:1}
 
-@media(max-width:900px){
+/* responsive */
+@media(max-width:1080px){
+  .concerns{grid-template-columns:repeat(5,1fr)}
+  .cats{grid-template-columns:repeat(4,1fr)}
   .hero-grid{grid-template-columns:1fr}
-  .head .searchwrap{display:none}
-  .fgrid{grid-template-columns:1fr 1fr}
+  .fcols{grid-template-columns:1fr 1fr}
 }
-@media(max-width:680px){
-  .brand .wm small{display:none}
-  .eta{display:none}
-  .cart-pill span.lbl{display:none}
-  .cart-pill{padding:11px 13px}
-  .hero-card{padding:24px 18px}
-  .fgrid{grid-template-columns:1fr}
-  .mbar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:70;background:var(--surface);border-top:1px solid var(--border);padding:10px 14px;box-shadow:0 -6px 24px rgba(11,37,48,.1);align-items:center;gap:12px}
-  .mbar .mt{flex:1;font-size:13px;font-weight:700}
-  .mbar .mt span{display:block;font-size:11.5px;color:var(--text-dim);font-weight:600}
-  .mbar button{background:var(--green);color:#fff;border:none;border-radius:12px;padding:12px 20px;font-weight:800;font-size:14px}
-  body{padding-bottom:74px}
+@media(max-width:820px){
+  nav.mainnav{display:none}
+  .hright .hlink{display:none}
+  .quickbuy{display:none}
+}
+@media(max-width:640px){
+  .hrow{gap:8px;padding:10px 12px}
+  .hright{gap:8px}
+  .lang button{padding:4px 7px;font-size:11px}
+  .cartbtn{padding:8px 11px;font-size:12.5px}
+  .cartbtn span[data-i18n="cart"]{display:none}
+  .logo b{font-size:18px}
+  .logo small{display:none}
+  .city{display:none}
+  .concerns{grid-template-columns:repeat(3,1fr)}
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .fcols{grid-template-columns:1fr}
+  .topstrip .r{display:none}
+  .promo{padding:22px 18px}
+  .oncall{padding:22px 18px}
+  .pcard{width:165px}
+  .chk{width:220px}
 }
 </style>
 </head>
 <body>
 
-<div class="announce">
-  <div class="wrap"><span data-i18n="announce">Free home delivery within 3 km &middot; ~30 min average &middot; Open till 10 PM</span></div>
+<!-- TOP STRIP -->
+<div class="topstrip">
+  <div class="wrap">
+    <span>Free home delivery above &#8377;499 &middot; Delivered in ~30 min</span>
+    <div class="r">
+      <span data-i18n="needHelp">Need help? <b>+91 89577 85613</b></span>
+      <a href="tel:+918957785613" data-i18n="callNow">Call now</a>
+    </div>
+  </div>
 </div>
 
+<!-- HEADER -->
 <header>
-  <div class="wrap head">
-    <a class="brand" href="#top">
-      <span class="mark">
-        <!-- Medical cross logo -->
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 4.6v14.8M4.6 12h14.8"/>
-        </svg>
-      </span>
-      <span class="wm"><b>Rudhra</b><small>Medical</small></span>
+  <div class="wrap hrow">
+    <a class="logo" href="#top">
+      <span class="mk"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 4.8v14.4M4.8 12h14.4"/></svg></span>
+      <span><b>Rudhra<span> Medical</span></b><small>Pharmacy &amp; Wellness</small></span>
     </a>
-    <div class="searchwrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
-      <input id="searchTop" type="text" data-i18n-ph="searchTop" placeholder="Search medicines or products...">
-      <button class="mic" id="micTop" title="Search by voice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg>
+    <nav class="mainnav">
+      <a href="#shop" class="active" data-i18n="navMed">Medicines</a>
+      <a href="#checkups" data-i18n="navLab">Lab Tests</a>
+      <a href="#" onclick="return false" data-i18n="navDoc">Consult Doctors</a>
+      <a href="#concerns" data-i18n="navConcern">Health Concerns</a>
+      <a href="#cats" data-i18n="navAyu">Ayurveda</a>
+      <a href="#shop" data-i18n="navOffers">Offers</a>
+    </nav>
+    <div class="hright">
+      <div class="lang">
+        <button id="lEn" class="active" onclick="setLang('en')">EN</button>
+        <button id="lHi" onclick="setLang('hi')">&#2361;&#2367;&#2306;</button>
+      </div>
+      <a href="#" onclick="return false" class="hlink" data-i18n="login">Login</a>
+      <button class="cartbtn" onclick="openCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 7H6"/></svg>
+        <span data-i18n="cart">Cart</span>
+        <span class="bdg" id="cartCount">0</span>
       </button>
     </div>
-    <div class="spacer"></div>
-    <span class="eta"><span class="dot"></span> <span data-i18n="eta">Delivery in ~30 min</span></span>
-    <div class="lang">
-      <button id="langEn" class="active" onclick="setLang('en')">EN</button>
-      <button id="langHi" onclick="setLang('hi')">&#2361;&#2367;&#2306;</button>
+  </div>
+  <div class="searchrow">
+    <div class="wrap">
+      <div class="city"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="enterCity">Enter your city</span></div>
+      <div class="sbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
+        <input id="search" type="text" data-i18n-ph="searchPh" placeholder="Search for medicines and health products">
+      </div>
+      <div class="quickbuy">
+        <span><span data-i18n="quickBuy">QUICK BUY!</span><small data-i18n="quickSub">Up to 25% off on medicines</small></span>
+        <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" data-i18n="quickOrder">Quick order</button>
+      </div>
     </div>
-    <button class="cart-pill" onclick="openCart()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 7H6"/></svg>
-      <span class="lbl" data-i18n="cart">Cart</span>
-      <span class="badge" id="cartCount">0</span>
-    </button>
   </div>
 </header>
 
 <main class="wrap" id="top">
 
-  <!-- HERO -->
+  <!-- HERO + PRESCRIPTION -->
   <section class="hero">
     <div class="hero-grid">
-      <div class="hero-card">
-        <span class="hero-tag" data-i18n="heroTag">Family Chemist &middot; Since 1998</span>
-        <h1 data-i18n-html="heroTitle">Three taps, <em>medicine at your door.</em></h1>
-        <p data-i18n="heroSub">No queues, no crowds. Type a medicine name or send a photo of your prescription &mdash; we deliver it to your home.</p>
-
-        <div class="order-box">
-          <label data-i18n="orderLabel">Start your order</label>
-          <div class="ob-row">
-            <div class="ob-search">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
-              <input id="searchHero" type="text" data-i18n-ph="heroSearchPh" placeholder="e.g. Dolo 650, ORS, Cetirizine...">
-            </div>
-            <button class="btn btn-rx" onclick="prescriptionModal()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
-              <span data-i18n="prescriptionBtn">Send prescription</span>
-            </button>
-          </div>
-          <div class="steps">
-            <div class="step"><div class="n">1</div><h4 data-i18n="step1t">Find</h4><p data-i18n="step1p">Type a name or pick a symptom</p></div>
-            <div class="step"><div class="n">2</div><h4 data-i18n="step2t">Add</h4><p data-i18n="step2p">Drop it in the cart in one tap</p></div>
-            <div class="step"><div class="n">3</div><h4 data-i18n="step3t">Send order</h4><p data-i18n="step3p">On WhatsApp &mdash; we handle the rest</p></div>
-          </div>
+      <div class="promo">
+        <h1 data-i18n="heroH">Your trusted neighbourhood pharmacy, now online.</h1>
+        <p data-i18n="heroP">Order genuine medicines, upload your prescription, and get free delivery to your door in about 30 minutes.</p>
+        <div class="btns">
+          <button class="btn btn-w" onclick="prescriptionModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+            <span data-i18n="orderRx">Order with prescription</span>
+          </button>
+          <a class="btn btn-o" href="tel:+918957785613">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span data-i18n="callOrder">Call to order</span>
+          </a>
         </div>
       </div>
-
-      <div class="side">
-        <div class="side-card">
-          <h3 data-i18n="lastOrderT">Your last order</h3>
-          <div class="sub" data-i18n="lastOrderSub">Reorder in one tap</div>
-          <div class="reorder">
-            <div class="ri"><b data-i18n="lastOrderItems">3 items &middot; &#8377;159</b><span data-i18n="lastOrderList">Paracetamol, ORS, Cetirizine</span></div>
-            <button onclick="reorderLast()" data-i18n="reorderBtn">Reorder</button>
-          </div>
-        </div>
-        <div class="side-card rxcard">
-          <h3 data-i18n="rxCardT">Have a prescription?</h3>
-          <div class="sub" data-i18n="rxCardSub">Send a photo &mdash; our pharmacist prepares it</div>
-          <div class="up">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
-            <p data-i18n="rxCardDrop">A clear photo of the prescription &mdash; straight to WhatsApp</p>
-          </div>
-          <button onclick="prescriptionModal()" data-i18n="rxCardBtn">Send photo</button>
-        </div>
+      <div class="sidebanner">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg></div>
+        <h3 data-i18n="uploadH">Have a prescription?</h3>
+        <p data-i18n="uploadP">Send a clear photo on WhatsApp. Our pharmacist will prepare your medicines.</p>
+        <button onclick="prescriptionModal()" data-i18n="uploadBtn">Upload prescription</button>
       </div>
     </div>
   </section>
 
-  <!-- SYMPTOM QUICK PICK -->
-  <section class="sec">
-    <div class="sec-head">
-      <h3><span class="line"></span><span data-i18n="symptomTitle">What's the problem?</span></h3>
-      <span class="hint" data-i18n="symptomHint">Tap &mdash; the full list goes to cart</span>
+  <!-- HEALTH CONCERNS -->
+  <section class="blk" id="concerns">
+    <div class="blk-head">
+      <div><h2 data-i18n="concernH">Shop by health concerns</h2></div>
+      <a href="#shop" class="seeall" data-i18n="seeAll">See all</a>
     </div>
-    <div class="chips" id="symptomBar"></div>
+    <div class="concerns" id="concernsGrid"></div>
+  </section>
+
+  <!-- HEALTH CHECKUPS -->
+  <section class="blk" id="checkups">
+    <div class="blk-head">
+      <div><h2 data-i18n="checkupH">Full body health checkups</h2><div class="sub" data-i18n="checkupSub">Booked through partner labs &middot; home sample collection</div></div>
+      <a href="#" onclick="return false" class="seeall" data-i18n="seeAll">See all</a>
+    </div>
+    <div class="hscroll" id="checkupRow"></div>
   </section>
 
   <!-- PRODUCTS -->
-  <section class="sec" id="shop">
-    <div class="sec-head">
-      <h3><span class="line"></span><span id="secTitle">Best sellers</span></h3>
-      <span class="hint" id="prodCount"></span>
+  <section class="blk" id="shop">
+    <div class="blk-head">
+      <div><h2 id="shopTitle" data-i18n="shopH">Featured products</h2><div class="sub" id="shopSub"></div></div>
+      <a href="#" onclick="return false" class="seeall" data-i18n="seeAll">See all</a>
     </div>
-    <div class="catbar" id="catBar"></div>
-    <div class="grid" id="grid"></div>
+    <div class="hscroll" id="productRow"></div>
   </section>
 
-  <!-- TRUST -->
-  <section class="trust">
-    <div class="tbox">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      <h5 data-i18n="tr1h">Licensed chemist</h5>
-      <p data-i18n="tr1p">Every order is checked by a registered pharmacist.</p>
+  <!-- CATEGORIES -->
+  <section class="blk" id="cats">
+    <div class="blk-head">
+      <div><h2 data-i18n="catH">Popular categories</h2></div>
+      <a href="#shop" class="seeall" data-i18n="seeAll">See all</a>
     </div>
-    <div class="tbox">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-      <h5 data-i18n="tr2h">100% genuine medicines</h5>
-      <p data-i18n="tr2p">Only from authorised distributors, with expiry guaranteed.</p>
-    </div>
-    <div class="tbox">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <h5 data-i18n="tr3h">30-minute delivery</h5>
-      <p data-i18n="tr3p">Within 3 km, straight to your doorstep.</p>
-    </div>
-    <div class="tbox">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <h5 data-i18n="tr4h">Order on WhatsApp</h5>
-      <p data-i18n="tr4p">No app download &mdash; just send a message.</p>
-    </div>
+    <div class="cats" id="catGrid"></div>
   </section>
 
-  <div class="note">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
-    <span data-i18n-html="note"><b>Important:</b> Schedule H / H1 medicines are not dispensed without a doctor's prescription. For these, please send the prescription on WhatsApp before ordering &mdash; our pharmacist verifies it first. By law, the final sale takes place at the licensed pharmacy.</span>
-  </div>
+  <!-- ORDER ON CALL -->
+  <section class="oncall">
+    <div class="txt">
+      <h3 data-i18n="oncallH">Order medicines on call</h3>
+      <p data-i18n="oncallP">Call us at +91 89577 85613 or request a call back &mdash; we&rsquo;ll take your order on the phone.</p>
+    </div>
+    <div class="form">
+      <div class="cc">+91</div>
+      <input id="cbPhone" type="tel" placeholder="Enter your mobile number" data-i18n-ph="cbPh">
+      <button onclick="callBack()" data-i18n="cbBtn">Get a call back</button>
+    </div>
+  </section>
 
 </main>
 
+<!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="fgrid">
-      <div class="fbrand">
-        <b>Rudhra Medical</b>
-        <p data-i18n="footAbout">Your neighbourhood family chemist. Order in three taps, delivered in 30 minutes.</p>
+    <div class="fcols">
+      <div class="brandf">
+        <b>Rudhra<span> Medical</span></b>
+        <p data-i18n="footAbout">Your neighbourhood family chemist &mdash; genuine medicines, honest prices and fast home delivery.</p>
+      </div>
+      <div>
+        <h6 data-i18n="footKnow">Know us</h6>
+        <a href="#" onclick="return false" data-i18n="footAboutUs">About us</a>
+        <a href="#" onclick="return false" data-i18n="footContactUs">Contact us</a>
+        <a href="#" onclick="return false" data-i18n="footCareers">Careers</a>
+      </div>
+      <div>
+        <h6 data-i18n="footPolicy">Our policies</h6>
+        <a href="#" onclick="return false" data-i18n="footPrivacy">Privacy policy</a>
+        <a href="#" onclick="return false" data-i18n="footTerms">Terms &amp; conditions</a>
+        <a href="#" onclick="return false" data-i18n="footReturn">Return policy</a>
       </div>
       <div>
         <h6 data-i18n="footContact">Contact</h6>
-        <a href="tel:+918957785613">Phone: +91 89577 85613</a>
-        <a href="https://wa.me/918957785613">WhatsApp order</a>
-        <a href="mailto:rudhramedical@example.com">rudhramedical@example.com</a>
-      </div>
-      <div>
-        <h6 data-i18n="footShop">Shop</h6>
+        <a href="tel:+918957785613">+91 89577 85613</a>
+        <a href="https://wa.me/918957785613" data-i18n="footWa">WhatsApp order</a>
         <p>[Your full shop address]</p>
         <p data-i18n="footHours">Every day, 9:00 AM &ndash; 10:00 PM</p>
-        <p>Drug Licence: XX-XXXXXX &middot; GSTIN: 00XXXXX0000X0X0</p>
       </div>
     </div>
-    <div class="fbot" data-i18n="footNote">&copy; 2026 Rudhra Medical &mdash; sample website. Replace with your real details.</div>
+    <div class="fbot">
+      <p style="margin-bottom:6px" data-i18n="footLic">Drug Licence: XX-XXXXXX &middot; GSTIN: 00XXXXX0000X0X0</p>
+      <span data-i18n="footNote">&copy; 2026 Rudhra Medical. Sample website &mdash; replace with your real details.</span>
+    </div>
   </div>
 </footer>
 
 <!-- CART -->
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
 <aside class="drawer" id="drawer">
-  <div class="dhead">
+  <div class="dh">
     <h3 data-i18n="cartTitle">Your cart</h3>
     <button class="x" onclick="closeCart()">&times;</button>
   </div>
   <div class="items" id="items"></div>
-  <div class="dfoot">
+  <div class="df">
     <div class="tr"><span data-i18n="sumItems">Items</span><span id="sumItems">0</span></div>
     <div class="tr"><span data-i18n="sumSave">Saved vs MRP</span><span id="sumSave">&ndash;</span></div>
-    <div class="tr grand"><span data-i18n="sumTotal">Total</span><span id="sumTotal">&#8377;0</span></div>
+    <div class="tr g"><span data-i18n="sumTotal">Total</span><span id="sumTotal">&#8377;0</span></div>
     <button class="wa" id="waBtn" onclick="orderWhatsApp()" disabled>
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 0 1 6.9 12.1l-.3.5.7 2.6-2.7-.7-.5.3A8 8 0 1 1 12 4zm-3 4c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.7 2.7 4.2 3.7 2 .8 2.5.7 2.9.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3l-1.8-.9c-.2-.1-.4-.1-.6.1l-.6.8c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.8-.7-1.2-1.4-1.4-1.7-.1-.2 0-.3.1-.4l.4-.5c.1-.2.2-.3.3-.5 0-.2 0-.3 0-.5l-.7-1.7c-.2-.5-.4-.4-.6-.4z"/></svg>
       <span data-i18n="waBtn">Send order on WhatsApp</span>
     </button>
-    <div class="paynote" data-i18n="paynote">We will call / WhatsApp you to confirm your order.</div>
+    <div class="pn" data-i18n="payNote">We will call / WhatsApp you to confirm your order.</div>
   </div>
 </aside>
 
-<!-- MOBILE BAR -->
-<div class="mbar" id="mbar">
-  <div class="mt"><span id="mbarCount">Cart is empty</span><span id="mbarTotal">See products</span></div>
-  <button onclick="openCart()" data-i18n="mbarViewCart">View cart</button>
-</div>
-
-<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="toastMsg"></span></div>
+<div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   TRANSLATIONS  (English default, Hindi switch)
-   ============================================================ */
-const T = {
-  en:{
-    announce:"Free home delivery within 3 km \u00b7 ~30 min average \u00b7 Open till 10 PM",
-    searchTop:"Search medicines or products...",
-    eta:"Delivery in ~30 min", cart:"Cart",
-    heroTag:"Family Chemist \u00b7 Since 1998",
-    heroTitle:"Three taps, <em>medicine at your door.</em>",
-    heroSub:"No queues, no crowds. Type a medicine name or send a photo of your prescription \u2014 we deliver it to your home.",
-    orderLabel:"Start your order",
-    heroSearchPh:"e.g. Dolo 650, ORS, Cetirizine...",
-    prescriptionBtn:"Send prescription",
-    step1t:"Find", step1p:"Type a name or pick a symptom",
-    step2t:"Add", step2p:"Drop it in the cart in one tap",
-    step3t:"Send order", step3p:"On WhatsApp \u2014 we handle the rest",
-    lastOrderT:"Your last order", lastOrderSub:"Reorder in one tap",
-    lastOrderItems:"3 items \u00b7 \u20b9159", lastOrderList:"Paracetamol, ORS, Cetirizine",
-    reorderBtn:"Reorder",
-    rxCardT:"Have a prescription?", rxCardSub:"Send a photo \u2014 our pharmacist prepares it",
-    rxCardDrop:"A clear photo of the prescription \u2014 straight to WhatsApp", rxCardBtn:"Send photo",
-    symptomTitle:"What's the problem?", symptomHint:"Tap \u2014 the full list goes to cart",
-    secDefault:"Best sellers", products:"products",
-    searchResults:'Results for "', searchResultsEnd:'"',
-    empty:"Nothing found. Try another name.",
-    stock:"In stock", add:"Add", inCart:"In cart \u2713",
-    tr1h:"Licensed chemist", tr1p:"Every order is checked by a registered pharmacist.",
-    tr2h:"100% genuine medicines", tr2p:"Only from authorised distributors, with expiry guaranteed.",
-    tr3h:"30-minute delivery", tr3p:"Within 3 km, straight to your doorstep.",
-    tr4h:"Order on WhatsApp", tr4p:"No app download \u2014 just send a message.",
-    note:'<b>Important:</b> Schedule H / H1 medicines are not dispensed without a doctor\u2019s prescription. For these, please send the prescription on WhatsApp before ordering \u2014 our pharmacist verifies it first. By law, the final sale takes place at the licensed pharmacy.',
-    footAbout:"Your neighbourhood family chemist. Order in three taps, delivered in 30 minutes.",
-    footContact:"Contact", footShop:"Shop", footHours:"Every day, 9:00 AM \u2013 10:00 PM",
-    footNote:"\u00a9 2026 Rudhra Medical \u2014 sample website. Replace with your real details.",
-    cartTitle:"Your cart", sumItems:"Items", sumSave:"Saved vs MRP", sumTotal:"Total",
-    waBtn:"Send order on WhatsApp", paynote:"We will call / WhatsApp you to confirm your order.",
-    mbarViewCart:"View cart", mbarEmpty:"Cart is empty", mbarSee:"See products",
-    cartEmpty:"Your cart is empty.<br>Add products to start.",
-    toastAdded:"added to cart", toastCombo:"combo added to cart", toastReorder:"Last order added \u2713",
-    toastSearched:"Searched for", rxMsgName:"Name: ", rxMsgAddr:"Address: ",
-    waHead:"*Rudhra Medical \u2014 New Order*", waName:"My name: ", waAddr:"Address: ",
-    waRxNote:"(Please also send a photo of the prescription for Rx-only medicines)"
-  },
-  hi:{
-    announce:"3 \u0915\u093f\u092e\u0940 \u0915\u0947 \u092d\u0940\u0924\u0930 \u092e\u0941\u095e\u094d\u0924 \u0939\u094b\u092e \u0921\u093f\u0932\u0940\u0935\u0930\u0940 \u00b7 \u0914\u0938\u0924\u0928 ~30 \u092e\u093f\u0928\u091f \u00b7 \u0930\u093e\u0924 10 \u092c\u091c\u0947 \u0924\u0915 \u0916\u0941\u0932\u093e",
-    searchTop:"\u0926\u0935\u093e \u092f\u093e \u092a\u094d\u0930\u094b\u0921\u0915\u094d\u091f \u0916\u094b\u091c\u0947\u0902...",
-    eta:"\u0921\u093f\u0932\u0940\u0935\u0930\u0940 ~30 \u092e\u093f\u0928\u091f \u092e\u0947\u0902", cart:"\u0915\u093e\u0930\u094d\u091f",
-    heroTag:"\u092b\u0948\u092e\u093f\u0932\u0940 \u0915\u0947\u092e\u093f\u0938\u094d\u091f \u00b7 1998 \u0938\u0947",
-    heroTitle:"\u0924\u0940\u0928 \u091f\u0948\u092a, <em>\u0926\u0935\u093e \u0906\u092a\u0915\u0947 \u0926\u0930\u0935\u093e\u091c\u093c\u0947 \u092a\u0930\u0964</em>",
-    heroSub:"\u0928 \u0932\u093e\u0907\u0928, \u0928 \u092d\u0940\u0921\u093c\u0964 \u0926\u0935\u093e \u0915\u093e \u0928\u093e\u092e \u0932\u093f\u0916\u0947\u0902 \u092f\u093e \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u092d\u0947\u091c\u0947\u0902 \u2014 \u0939\u092e \u0918\u0930 \u092a\u0939\u0941\u0901\u091a\u093e \u0926\u0947\u0902\u0917\u0947\u0964",
-    orderLabel:"\u0911\u0930\u094d\u0921\u0930 \u0936\u0941\u0930\u0942 \u0915\u0930\u0947\u0902",
-    heroSearchPh:"\u091c\u0948\u0938\u0947: \u0921\u094b\u0932\u094b 650, \u0913\u0906\u0930\u090f\u0938, \u0938\u0947\u091f\u093f\u0930\u093f\u091c\u093c\u0940\u0928...",
-    prescriptionBtn:"\u092a\u0930\u094d\u091a\u093e \u092d\u0947\u091c\u0947\u0902",
-    step1t:"\u0916\u094b\u091c\u0947\u0902", step1p:"\u0928\u093e\u092e \u0932\u093f\u0916\u0947\u0902 \u092f\u093e \u0932\u0915\u094d\u0937\u0923 \u091a\u0941\u0928\u0947\u0902",
-    step2t:"\u091c\u094b\u0921\u093c\u0947\u0902", step2p:"\u090f\u0915 \u091f\u0948\u092a \u092e\u0947\u0902 \u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u0921\u093e\u0932\u0947\u0902",
-    step3t:"\u0911\u0930\u094d\u0921\u0930 \u092d\u0947\u091c\u0947\u0902", step3p:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u2014 \u092c\u093e\u0915\u0940 \u0939\u092e \u0938\u0902\u092d\u093e\u0932\u0947\u0902\u0917\u0947",
-    lastOrderT:"\u0906\u092a\u0915\u093e \u092a\u093f\u091b\u0932\u093e \u0911\u0930\u094d\u0921\u0930", lastOrderSub:"\u090f\u0915 \u091f\u0948\u092a \u092e\u0947\u0902 \u0926\u094b\u092c\u093e\u0930\u093e \u0911\u0930\u094d\u0921\u0930",
-    lastOrderItems:"3 \u0906\u0907\u091f\u092e \u00b7 \u20b9159", lastOrderList:"\u092a\u0948\u0930\u093e\u0938\u093f\u091f\u093e\u092e\u0949\u0932, \u0913\u0906\u0930\u090f\u0938, \u0938\u0947\u091f\u093f\u0930\u093f\u091c\u093c\u0940\u0928",
-    reorderBtn:"\u0926\u094b\u092c\u093e\u0930\u093e \u0911\u0930\u094d\u0921\u0930",
-    rxCardT:"\u092a\u0930\u094d\u091a\u093e \u0939\u0948 \u0906\u092a\u0915\u0947 \u092a\u093e\u0938?", rxCardSub:"\u095e\u094b\u091f\u094b \u092d\u0947\u091c\u0947\u0902 \u2014 \u0939\u092e\u093e\u0930\u093e \u095e\u093e\u0930\u094d\u092e\u093e\u0938\u093f\u0938\u094d\u091f \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0947\u0917\u093e",
-    rxCardDrop:"\u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u0938\u093e\u095e\u093c \u095e\u094b\u091f\u094b \u2014 \u0938\u0940\u0927\u0947 \u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930", rxCardBtn:"\u095e\u094b\u091f\u094b \u092d\u0947\u091c\u0947\u0902",
-    symptomTitle:"\u0915\u094d\u092f\u093e \u0924\u0915\u0932\u0940\u095e\u093c \u0939\u0948?", symptomHint:"\u091f\u0948\u092a \u0915\u0930\u0947\u0902 \u2014 \u092a\u0942\u0930\u0940 \u0932\u093f\u0938\u094d\u091f \u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902",
-    secDefault:"\u0938\u092c\u0938\u0947 \u091c\u093c\u094d\u092f\u093e\u0926\u093e \u092c\u093f\u0915\u0928\u0947 \u0935\u093e\u0932\u0940", products:"\u092a\u094d\u0930\u094b\u0921\u0915\u094d\u091f",
-    searchResults:'"', searchResultsEnd:'" \u0915\u0947 \u0928\u0924\u0940\u091c\u0947',
-    empty:"\u0915\u0941\u091b \u0928\u0939\u0940\u0902 \u092e\u093f\u0932\u093e\u0964 \u0926\u0942\u0938\u0930\u093e \u0928\u093e\u092e \u0906\u091c\u093c\u092e\u093e\u090f\u0901\u0964",
-    stock:"\u0938\u094d\u091f\u0949\u0915 \u092e\u0947\u0902", add:"\u091c\u094b\u0921\u093c\u0947\u0902", inCart:"\u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u2713",
-    tr1h:"\u0932\u093e\u0907\u0938\u0947\u0902\u0938\u092f\u0941\u0915\u094d\u0924 \u0915\u0947\u092e\u093f\u0938\u094d\u091f", tr1p:"\u0939\u0930 \u0911\u0930\u094d\u0921\u0930 \u0930\u091c\u093f\u0938\u094d\u091f\u0930\u094d\u0921 \u095e\u093e\u0930\u094d\u092e\u093e\u0938\u093f\u0938\u094d\u091f \u0926\u094d\u0935\u093e\u0930\u093e \u091c\u093e\u0901\u091a\u093e \u091c\u093e\u0924\u093e \u0939\u0948\u0964",
-    tr2h:"100% \u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u090f\u0901", tr2p:"\u0938\u093f\u0930\u094d\u095e \u0905\u0927\u093f\u0915\u0943\u0924 \u0935\u093f\u0924\u0930\u0915\u094b\u0902 \u0938\u0947, \u090f\u0915\u094d\u0938\u092a\u093e\u092f\u0930\u0940 \u0915\u0940 \u0917\u093e\u0930\u0902\u091f\u0940 \u0915\u0947 \u0938\u093e\u0925\u0964",
-    tr3h:"30 \u092e\u093f\u0928\u091f \u092e\u0947\u0902 \u0921\u093f\u0932\u0940\u0935\u0930\u0940", tr3p:"3 \u0915\u093f\u092e\u0940 \u0915\u0947 \u092d\u0940\u0924\u0930, \u0938\u0940\u0927\u0947 \u0906\u092a\u0915\u0947 \u0926\u0930\u0935\u093e\u091c\u093c\u0947 \u092a\u0930\u0964",
-    tr4h:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0911\u0930\u094d\u0921\u0930", tr4p:"\u0915\u094b\u0908 \u0910\u092a \u0921\u093e\u0909\u0928\u0932\u094b\u0921 \u0928\u0939\u0940\u0902 \u2014 \u092c\u0938 \u092e\u0948\u0938\u0947\u091c \u092d\u0947\u091c\u0947\u0902\u0964",
-    note:'<b>\u091c\u093c\u0930\u0942\u0930\u0940:</b> \u0936\u0947\u0921\u094d\u092f\u0942\u0932 H / H1 \u0935\u093e\u0932\u0940 \u0926\u0935\u093e\u090f\u0901 \u092c\u093f\u0928\u093e \u0921\u0949\u0915\u094d\u091f\u0930 \u0915\u0947 \u092a\u0930\u094d\u091a\u0947 \u0915\u0947 \u0928\u0939\u0940\u0902 \u0926\u0940 \u091c\u093e\u0924\u0940\u0902\u0964 \u0910\u0938\u0940 \u0926\u0935\u093e\u0913\u0902 \u0915\u0947 \u0932\u093f\u090f \u0911\u0930\u094d\u0921\u0930 \u0938\u0947 \u092a\u0939\u0932\u0947 \u092a\u0930\u094d\u091a\u093e \u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u092d\u0947\u091c\u0947\u0902 \u2014 \u0939\u092e\u093e\u0930\u093e \u095e\u093e\u0930\u094d\u092e\u093e\u0938\u093f\u0938\u094d\u091f \u092a\u0939\u0932\u0947 \u091c\u093e\u0901\u091a \u0915\u0930\u0947\u0917\u093e\u0964 \u0915\u093e\u0928\u0942\u0928 \u0915\u0947 \u092e\u0941\u0924\u093e\u092c\u093f\u0915 \u0905\u0902\u0924\u093f\u092e \u092c\u093f\u0915\u094d\u0930\u0940 \u0932\u093e\u0907\u0938\u0947\u0902\u0938\u092f\u0941\u0915\u094d\u0924 \u0926\u0941\u0915\u093e\u0928 \u092a\u0930 \u0939\u0940 \u0939\u094b\u0924\u0940 \u0939\u0948\u0964',
-    footAbout:"\u0906\u092a\u0915\u0947 \u092e\u094b\u0939\u0932\u094d\u0932\u0947 \u0915\u093e \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u095e\u0948\u092e\u093f\u0932\u0940 \u0915\u0947\u092e\u093f\u0938\u094d\u091f\u0964 \u0924\u0940\u0928 \u091f\u0948\u092a \u092e\u0947\u0902 \u0911\u0930\u094d\u0921\u0930, 30 \u092e\u093f\u0928\u091f \u092e\u0947\u0902 \u0921\u093f\u0932\u0940\u0935\u0930\u0940\u0964",
-    footContact:"\u0938\u0902\u092a\u0930\u094d\u0915", footShop:"\u0926\u0941\u0915\u093e\u0928", footHours:"\u0930\u094b\u091c\u093c, \u0938\u0941\u092c\u0939 9:00 \u2013 \u0930\u093e\u0924 10:00",
-    footNote:"\u00a9 2026 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u2014 \u0938\u0948\u092e\u094d\u092a\u0932 \u0935\u0947\u092c\u0938\u093e\u0907\u091f\u0964 \u0905\u092a\u0928\u0940 \u0905\u0938\u0932\u0940 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0938\u0947 \u092c\u0926\u0932\u0947\u0902\u0964",
-    cartTitle:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f", sumItems:"\u0906\u0907\u091f\u092e", sumSave:"MRP \u092a\u0930 \u092c\u091a\u0924", sumTotal:"\u0915\u0941\u0932",
-    waBtn:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u092d\u0947\u091c\u0947\u0902", paynote:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0928\u095e\u0930\u094d\u092e \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0939\u092e \u0915\u0949\u0932/\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0915\u0930\u0947\u0902\u0917\u0947\u0964",
-    mbarViewCart:"\u0915\u093e\u0930\u094d\u091f \u0926\u0947\u0916\u0947\u0902", mbarEmpty:"\u0915\u093e\u0930\u094d\u091f \u0916\u093e\u0932\u0940 \u0939\u0948", mbarSee:"\u092a\u094d\u0930\u094b\u0921\u0915\u094d\u091f \u0926\u0947\u0916\u0947\u0902",
-    cartEmpty:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f \u0916\u093e\u0932\u0940 \u0939\u0948\u0964<br>\u0936\u0941\u0930\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u092a\u094d\u0930\u094b\u0921\u0915\u094d\u091f \u091c\u094b\u0921\u093c\u0947\u0902\u0964",
-    toastAdded:"\u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u091c\u094b\u0921\u093c\u093e \u0917\u092f\u093e", toastCombo:"\u0915\u093e \u0915\u0949\u092e\u094d\u092c\u094b \u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u0921\u093e\u0932\u093e \u0917\u092f\u093e", toastReorder:"\u092a\u093f\u091b\u0932\u093e \u0911\u0930\u094d\u0921\u0930 \u091c\u094b\u0921\u093c\u093e \u0917\u092f\u093e \u2713",
-    toastSearched:"\u0916\u094b\u091c\u093e", rxMsgName:"\u0928\u093e\u092e: ", rxMsgAddr:"\u092a\u0924\u093e: ",
-    waHead:"*\u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u2014 \u0928\u092f\u093e \u0911\u0930\u094d\u0921\u0930*", waName:"\u092e\u0947\u0930\u093e \u0928\u093e\u092e: ", waAddr:"\u092a\u0924\u093e: ",
-    waRxNote:"(Rx \u0935\u093e\u0932\u0940 \u0926\u0935\u093e\u0913\u0902 \u0915\u0947 \u0932\u093f\u090f \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u092d\u0940 \u092d\u0947\u091c\u0947\u0902)"
-  }
+/* ================== TRANSLATIONS ================== */
+const T={
+ en:{needHelp:"Need help?",callNow:"Call now",navMed:"Medicines",navLab:"Lab Tests",navDoc:"Consult Doctors",navConcern:"Health Concerns",navAyu:"Ayurveda",navOffers:"Offers",login:"Login",cart:"Cart",enterCity:"Enter your city",searchPh:"Search for medicines and health products",quickBuy:"QUICK BUY!",quickSub:"Up to 25% off on medicines",quickOrder:"Quick order",heroH:"Your trusted neighbourhood pharmacy, now online.",heroP:"Order genuine medicines, upload your prescription, and get free delivery to your door in about 30 minutes.",orderRx:"Order with prescription",callOrder:"Call to order",uploadH:"Have a prescription?",uploadP:"Send a clear photo on WhatsApp. Our pharmacist will prepare your medicines.",uploadBtn:"Upload prescription",concernH:"Shop by health concerns",seeAll:"See all",checkupH:"Full body health checkups",checkupSub:"Booked through partner labs \u00b7 home sample collection",shopH:"Featured products",catH:"Popular categories",oncallH:"Order medicines on call",oncallP:"Call us at +91 89577 85613 or request a call back \u2014 we\u2019ll take your order on the phone.",cbPh:"Enter your mobile number",cbBtn:"Get a call back",footAbout:"Your neighbourhood family chemist \u2014 genuine medicines, honest prices and fast home delivery.",footKnow:"Know us",footAboutUs:"About us",footContactUs:"Contact us",footCareers:"Careers",footPolicy:"Our policies",footPrivacy:"Privacy policy",footTerms:"Terms & conditions",footReturn:"Return policy",footContact:"Contact",footWa:"WhatsApp order",footHours:"Every day, 9:00 AM \u2013 10:00 PM",footLic:"Drug Licence: XX-XXXXXX \u00b7 GSTIN: 00XXXXX0000X0X0",footNote:"\u00a9 2026 Rudhra Medical. Sample website \u2014 replace with your real details.",cartTitle:"Your cart",sumItems:"Items",sumSave:"Saved vs MRP",sumTotal:"Total",waBtn:"Send order on WhatsApp",payNote:"We will call / WhatsApp you to confirm your order.",add:"Add",inCart:"Added",book:"Book now",off:"off",products:"products",getBy:"Get by Today",emptyCart:"Your cart is empty. Add products to start.",added:"added to cart",resultFor:"Results for",booked:"Booking request sent on WhatsApp",callbk:"Call-back request sent on WhatsApp",waHead:"*Rudhra Medical \u2014 New Order*",waName:"My name: ",waAddr:"Address: ",waRx:"(Prescription photo attached for Rx medicines)"},
+ hi:{needHelp:"\u092e\u0926\u0926 \u091a\u093e\u0939\u093f\u090f?",callNow:"\u0905\u092d\u0940 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902",navMed:"\u0926\u0935\u093e\u0907\u092f\u093e\u0901",navLab:"\u0932\u0948\u092c \u091f\u0947\u0938\u094d\u091f",navDoc:"\u0921\u0949\u0915\u094d\u091f\u0930 \u0938\u0932\u093e\u0939",navConcern:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0938\u092e\u0938\u094d\u092f\u093e\u090f\u0901",navAyu:"\u0906\u092f\u0941\u0930\u094d\u0935\u0947\u0926",navOffers:"\u0911\u095e\u0930",login:"\u0932\u0949\u0917\u093f\u0928",cart:"\u0915\u093e\u0930\u094d\u091f",enterCity:"\u0905\u092a\u0928\u093e \u0936\u0939\u0930 \u0926\u0930\u094d\u091c \u0915\u0930\u0947\u0902",searchPh:"\u0926\u0935\u093e\u0907\u092f\u093e\u0901 \u0914\u0930 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0909\u0924\u094d\u092a\u093e\u0926 \u0916\u094b\u091c\u0947\u0902",quickBuy:"\u0915\u094d\u0935\u093f\u0915 \u092c\u093e\u092f!",quickSub:"\u0926\u0935\u093e\u0907\u092f\u094b\u0902 \u092a\u0930 25% \u0924\u0915 \u091b\u0942\u091f",quickOrder:"\u0915\u094d\u0935\u093f\u0915 \u0911\u0930\u094d\u0921\u0930",heroH:"\u0906\u092a\u0915\u0940 \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u092e\u094b\u0939\u0932\u094d\u0932\u093e \u092b\u093e\u0930\u094d\u092e\u0947\u0938\u0940, \u0905\u092c \u0911\u0928\u0932\u093e\u0907\u0928\u0964",heroP:"\u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901 \u092e\u0902\u0917\u093e\u090f\u0901, \u092a\u0930\u094d\u091a\u093e \u0905\u092a\u0932\u094b\u0921 \u0915\u0930\u0947\u0902, \u0914\u0930 \u0932\u0917\u092d\u0917 30 \u092e\u093f\u0928\u091f \u092e\u0947\u0902 \u0918\u0930 \u092a\u0930 \u092e\u0941\u095e\u094d\u0924 \u0921\u093f\u0932\u0940\u0935\u0930\u0940 \u092a\u093e\u090f\u0901\u0964",orderRx:"\u092a\u0930\u094d\u091a\u0947 \u0938\u0947 \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u0947\u0902",callOrder:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0947 \u0932\u093f\u090f \u0915\u0949\u0932 \u0915\u0930\u0947\u0902",uploadH:"\u092a\u0930\u094d\u091a\u093e \u0939\u0948 \u0906\u092a\u0915\u0947 \u092a\u093e\u0938?",uploadP:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0938\u093e\u095e\u093c \u095e\u094b\u091f\u094b \u092d\u0947\u091c\u0947\u0902\u0964 \u0939\u092e\u093e\u0930\u093e \u095e\u093e\u0930\u094d\u092e\u093e\u0938\u093f\u0938\u094d\u091f \u0926\u0935\u093e \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0947\u0917\u093e\u0964",uploadBtn:"\u092a\u0930\u094d\u091a\u093e \u0905\u092a\u0932\u094b\u0921 \u0915\u0930\u0947\u0902",concernH:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0938\u092e\u0938\u094d\u092f\u093e \u0915\u0947 \u0905\u0928\u0941\u0938\u093e\u0930 \u0916\u0930\u0940\u0926\u0947\u0902",seeAll:"\u0938\u092d\u0940 \u0926\u0947\u0916\u0947\u0902",checkupH:"\u092a\u0942\u0930\u0947 \u0936\u0930\u0940\u0930 \u0915\u0940 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u091c\u093e\u0901\u091a",checkupSub:"\u092a\u093e\u0930\u094d\u091f\u0928\u0930 \u0932\u0948\u092c \u0926\u094d\u0935\u093e\u0930\u093e \u00b7 \u0918\u0930 \u0938\u0947 \u0938\u0948\u092e\u094d\u092a\u0932 \u0915\u0932\u0947\u0915\u094d\u0936\u0928",shopH:"\u092a\u094d\u0930\u092e\u0941\u0916 \u0909\u0924\u094d\u092a\u093e\u0926",catH:"\u0932\u094b\u0915\u092a\u094d\u0930\u093f\u092f \u0936\u094d\u0930\u0947\u0923\u093f\u092f\u093e\u0901",oncallH:"\u0915\u0949\u0932 \u092a\u0930 \u0926\u0935\u093e \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u0947\u0902",oncallP:"+91 89577 85613 \u092a\u0930 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902 \u092f\u093e \u0915\u0949\u0932 \u092c\u0948\u0915 \u092e\u093e\u0902\u0917\u0947\u0902 \u2014 \u0939\u092e \u092b\u093c\u094b\u0928 \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u0932\u0947 \u0932\u0947\u0902\u0917\u0947\u0964",cbPh:"\u0905\u092a\u0928\u093e \u092e\u094b\u092c\u093e\u0907\u0932 \u0928\u0902\u092c\u0930 \u0921\u093e\u0932\u0947\u0902",cbBtn:"\u0915\u0949\u0932 \u092c\u0948\u0915 \u092a\u093e\u090f\u0901",footAbout:"\u0906\u092a\u0915\u0947 \u092e\u094b\u0939\u0932\u094d\u0932\u0947 \u0915\u093e \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u095e\u0948\u092e\u093f\u0932\u0940 \u0915\u0947\u092e\u093f\u0938\u094d\u091f \u2014 \u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901, \u0938\u0939\u0940 \u0926\u093e\u092e \u0914\u0930 \u0924\u0947\u091c\u093c \u0939\u094b\u092e \u0921\u093f\u0932\u0940\u0935\u0930\u0940\u0964",footKnow:"\u0939\u092e\u093e\u0930\u0947 \u092c\u093e\u0930\u0947 \u092e\u0947\u0902",footAboutUs:"\u0939\u092e\u093e\u0930\u0947 \u092c\u093e\u0930\u0947 \u092e\u0947\u0902",footContactUs:"\u0938\u0902\u092a\u0930\u094d\u0915 \u0915\u0930\u0947\u0902",footCareers:"\u0915\u0930\u093f\u092f\u0930",footPolicy:"\u0939\u092e\u093e\u0930\u0940 \u0928\u0940\u0924\u093f\u092f\u093e\u0901",footPrivacy:"\u0917\u094b\u092a\u0928\u0940\u092f\u0924\u093e \u0928\u0940\u0924\u093f",footTerms:"\u0928\u093f\u092f\u092e \u0935 \u0936\u0930\u094d\u0924\u0947\u0902",footReturn:"\u0935\u093e\u092a\u0938\u0940 \u0928\u0940\u0924\u093f",footContact:"\u0938\u0902\u092a\u0930\u094d\u0915",footWa:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0911\u0930\u094d\u0921\u0930",footHours:"\u0930\u094b\u091c\u093c, \u0938\u0941\u092c\u0939 9:00 \u2013 \u0930\u093e\u0924 10:00",footLic:"\u0921\u094d\u0930\u0917 \u0932\u093e\u0907\u0938\u0947\u0902\u0938: XX-XXXXXX \u00b7 GSTIN: 00XXXXX0000X0X0",footNote:"\u00a9 2026 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932\u0964 \u0938\u0948\u092e\u094d\u092a\u0932 \u0935\u0947\u092c\u0938\u093e\u0907\u091f \u2014 \u0905\u092a\u0928\u0940 \u0905\u0938\u0932\u0940 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0938\u0947 \u092c\u0926\u0932\u0947\u0902\u0964",cartTitle:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f",sumItems:"\u0906\u0907\u091f\u092e",sumSave:"MRP \u092a\u0930 \u092c\u091a\u0924",sumTotal:"\u0915\u0941\u0932",waBtn:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u092d\u0947\u091c\u0947\u0902",payNote:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0928\u095e\u0930\u094d\u092e \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0939\u092e \u0915\u0949\u0932/\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0915\u0930\u0947\u0902\u0917\u0947\u0964",add:"\u091c\u094b\u0921\u093c\u0947\u0902",inCart:"\u091c\u094b\u0921\u093c\u093e",book:"\u092c\u0941\u0915 \u0915\u0930\u0947\u0902",off:"\u091b\u0942\u091f",products:"\u0909\u0924\u094d\u092a\u093e\u0926",getBy:"\u0906\u091c \u092a\u093e\u090f\u0901",emptyCart:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f \u0916\u093e\u0932\u0940 \u0939\u0948\u0964 \u0936\u0941\u0930\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0909\u0924\u094d\u092a\u093e\u0926 \u091c\u094b\u0921\u093c\u0947\u0902\u0964",added:"\u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u091c\u094b\u0921\u093c\u093e",resultFor:"\u0916\u094b\u091c \u092a\u0930\u093f\u0923\u093e\u092e",booked:"\u092c\u0941\u0915\u093f\u0902\u0917 \u0905\u0928\u0941\u0930\u094b\u0927 \u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u092d\u0947\u091c\u093e",callbk:"\u0915\u0949\u0932 \u092c\u0948\u0915 \u0905\u0928\u0941\u0930\u094b\u0927 \u092d\u0947\u091c\u093e",waHead:"*\u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u2014 \u0928\u092f\u093e \u0911\u0930\u094d\u0921\u0930*",waName:"\u092e\u0947\u0930\u093e \u0928\u093e\u092e: ",waAddr:"\u092a\u0924\u093e: ",waRx:"(Rx \u0926\u0935\u093e\u0913\u0902 \u0915\u0947 \u0932\u093f\u090f \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u0938\u0902\u0932\u0917\u094d\u0928)"}
 };
+const PHONE="918957785613";
 
-/* ============================================================
-   PRODUCT DATA  (apna asli data yahan badlein)
-   ============================================================ */
-const CATS = [
-  {key:"fever",     en:"Fever & Pain",  hi:"\u092c\u0941\u0916\u093e\u0930 \u0935 \u0926\u0930\u094d\u0926"},
-  {key:"antibiotic",en:"Antibiotic",    hi:"\u090f\u0902\u091f\u0940\u092c\u093e\u092f\u094b\u091f\u093f\u0915"},
-  {key:"allergy",   en:"Allergy",       hi:"\u090f\u0932\u0930\u094d\u091c\u0940"},
-  {key:"hydration", en:"Hydration",     hi:"\u0939\u093e\u0907\u0921\u094d\u0930\u0947\u0936\u0928"},
-  {key:"acidity",   en:"Acidity",       hi:"\u090f\u0938\u093f\u0921\u093f\u091f\u0940"},
-  {key:"cough",     en:"Cough & Cold",  hi:"\u0916\u093e\u0902\u0938\u0940 \u0935 \u091c\u0941\u0915\u093e\u092e"},
-  {key:"devices",   en:"Devices",       hi:"\u0909\u092a\u0915\u0930\u0923"},
-  {key:"hygiene",   en:"Hygiene",       hi:"\u0938\u094d\u0935\u091a\u094d\u091b\u0924\u093e"},
-  {key:"supplements",en:"Supplements",  hi:"\u0938\u092a\u094d\u0932\u0940\u092e\u0947\u0902\u091f"},
-  {key:"nutrition", en:"Nutrition",     hi:"\u092a\u094b\u0937\u0923"},
-  {key:"firstaid",  en:"First Aid",     hi:"\u092a\u094d\u0930\u093e\u0925\u092e\u093f\u0915 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e"},
-  {key:"diabetes",  en:"Diabetes",      hi:"\u0921\u093e\u092f\u092c\u0940\u091f\u0940\u091c\u093c"},
-  {key:"bp",        en:"BP & Heart",    hi:"\u092c\u0940\u092a\u0940 \u0935 \u0939\u0943\u0926\u092f"}
-];
-const catLabel = k => { const c=CATS.find(x=>x.key===k); return c?c[lang]:k; };
-
-const PRODUCTS = [
-  {id:1, name:"Paracetamol 500mg Tablet", cat:"fever",     pack:"Strip of 15", mrp:35, price:33, rx:false},
-  {id:2, name:"Dolo 650 Tablet",          cat:"fever",     pack:"Strip of 15", mrp:34, price:32, rx:false},
-  {id:3, name:"Azithromycin 500mg Tablet",cat:"antibiotic",pack:"Strip of 3",  mrp:120, price:108, rx:true},
-  {id:4, name:"Cetirizine 10mg Tablet",   cat:"allergy",   pack:"Strip of 10", mrp:30, price:27, rx:false},
-  {id:5, name:"ORS Powder",               cat:"hydration", pack:"Sachet 21.8g",mrp:25, price:22, rx:false},
-  {id:6, name:"Pantoprazole 40mg Tablet", cat:"acidity",   pack:"Strip of 15", mrp:145, price:130, rx:true},
-  {id:7, name:"Cough Syrup 100ml",        cat:"cough",     pack:"Bottle 100ml",mrp:110, price:99, rx:false},
-  {id:8, name:"Digital Thermometer",      cat:"devices",   pack:"1 piece",     mrp:250, price:210, rx:false},
-  {id:9, name:"Hand Sanitizer 500ml",     cat:"hygiene",   pack:"500 ml",      mrp:180, price:150, rx:false},
-  {id:10,name:"Vitamin D3 60000 IU",      cat:"supplements",pack:"Strip of 4", mrp:90, price:80, rx:false},
-  {id:11,name:"Glucose Powder",           cat:"nutrition", pack:"500 g",       mrp:145, price:130, rx:false},
-  {id:12,name:"Adhesive Plaster (Band-Aid)",cat:"firstaid",pack:"Box of 100",  mrp:120, price:105, rx:false},
-  {id:13,name:"Metformin 500mg Tablet",   cat:"diabetes",  pack:"Strip of 20", mrp:60, price:52, rx:true},
-  {id:14,name:"Amlodipine 5mg Tablet",    cat:"bp",        pack:"Strip of 15", mrp:55, price:48, rx:true},
-  {id:15,name:"Antacid Gel 170ml",        cat:"acidity",   pack:"Bottle 170ml",mrp:130, price:115, rx:false},
-  {id:16,name:"Vitamin C Chewable",       cat:"supplements",pack:"Strip of 10",mrp:95, price:85, rx:false}
-];
-
-const SYMPTOMS = [
-  {key:"fever",   en:"Fever",        hi:"\u092c\u0941\u0916\u093e\u0930",        sub:{en:"3 items",hi:"3 \u0906\u0907\u091f\u092e"}, ids:[1,5,8],  icon:"thermo"},
-  {key:"cough",   en:"Cough & Cold", hi:"\u0916\u093e\u0902\u0938\u0940-\u091c\u0941\u0915\u093e\u092e", sub:{en:"3 items",hi:"3 \u0906\u0907\u091f\u092e"}, ids:[7,4,16], icon:"cough"},
-  {key:"stomach", en:"Stomach pain", hi:"\u092a\u0947\u091f \u0926\u0930\u094d\u0926", sub:{en:"2 items",hi:"2 \u0906\u0907\u091f\u092e"}, ids:[6,15],  icon:"stomach"},
-  {key:"allergy", en:"Allergy",      hi:"\u090f\u0932\u0930\u094d\u091c\u0940",    sub:{en:"2 items",hi:"2 \u0906\u0907\u091f\u092e"}, ids:[4,16],  icon:"cough"},
-  {key:"chronic", en:"Sugar / BP",   hi:"\u0936\u0941\u0917\u0930 / \u092c\u0940\u092a\u0940", sub:{en:"Rx",hi:"Rx"}, ids:[13,14], icon:"heart"},
-  {key:"wound",   en:"Wound care",   hi:"\u0918\u093e\u0935",      sub:{en:"2 items",hi:"2 \u0906\u0907\u091f\u092e"}, ids:[12,9],  icon:"aid"}
-];
-
-const ICONS = {
-  thermo:'<path d="M14 14.8V5a2 2 0 1 0-4 0v9.8a4 4 0 1 0 4 0z"/>',
-  cough:'<path d="M12 3v3M8 6h8M6 11h12l-1.5 8.5a2 2 0 0 1-2 1.5h-5a2 2 0 0 1-2-1.5z"/>',
-  stomach:'<path d="M12 21a7 7 0 0 0 7-7V8a2 2 0 0 0-2-2h-1l-1.5 3H9L7.5 6H6a2 2 0 0 0-2 2v6a7 7 0 0 0 8 7z"/>',
-  heart:'<path d="M12 21s-7-4.5-9.3-8.8A5 5 0 0 1 12 6.2a5 5 0 0 1 9.3 6C19 16.5 12 21 12 21z"/>',
-  aid:'<rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/>',
-  pill:'<rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/>'
+/* ================== ICONS ================== */
+const IC={
+ diabetes:'<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+ heart:'<path d="M12 21s-7-4.5-9.3-8.8A5 5 0 0 1 12 6.2a5 5 0 0 1 9.3 6C19 16.5 12 21 12 21z"/>',
+ stomach:'<path d="M12 21a7 7 0 0 0 7-7V8a2 2 0 0 0-2-2h-1l-1.5 3H9L7.5 6H6a2 2 0 0 0-2 2v6a7 7 0 0 0 8 7z"/>',
+ liver:'<path d="M4 8c4-2 9-2 13 0 2 1 3 3 2 6-1 3-5 5-9 4S3 14 3 11c0-1.5.5-2.5 1-3z"/>',
+ bone:'<path d="M7 17a2.5 2.5 0 1 0-2-4l6-6a2.5 2.5 0 1 0 4 2l-6 6a2.5 2.5 0 1 0-2 4z" transform="translate(2 2)"/>',
+ kidney:'<path d="M9 4c3 0 4 3 4 8s-1 8-4 8-4-3-4-8 1-8 4-8z"/><path d="M15 4c-3 0-4 3-4 8s1 8 4 8 4-3 4-8-1-8-4-8z" opacity=".5"/>',
+ derma:'<path d="M6 12a6 6 0 0 1 12 0c0 4-3 8-6 8s-6-4-6-8z"/><path d="M9 11h6"/>',
+ lungs:'<path d="M12 3v9M12 12c-1 0-5-1-6 2s0 6 3 6 3-3 3-6M12 12c1 0 5-1 6 2s0 6-3 6-3-3-3-6"/>',
+ eye:'<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/>',
+ vitamin:'<rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/>',
+ drink:'<path d="M6 4h12l-1.5 15a2 2 0 0 1-2 1.8H9.5a2 2 0 0 1-2-1.8z"/><path d="M7 9h10"/>',
+ skin:'<circle cx="12" cy="12" r="9"/><path d="M9 10c0 2 1.5 3 3 3"/>',
+ hair:'<path d="M4 20c0-6 3-14 8-14s8 8 8 14"/><path d="M8 20c0-4 1-9 4-9s4 5 4 9"/>',
+ wellness:'<path d="M12 21s-7-4.5-9.3-8.8A5 5 0 0 1 12 6.2a5 5 0 0 1 9.3 6C19 16.5 12 21 12 21z"/>',
+ ayu:'<path d="M12 3c3 3 3 7 0 9-3-2-3-6 0-9z"/><path d="M12 12v9M7 17c2 0 5 1 5 4M17 17c-2 0-5 1-5 4"/>',
+ pain:'<path d="M12 3v18M3 12h18" transform="rotate(45 12 12)"/><circle cx="12" cy="12" r="3"/>',
+ baby:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>',
+ homeo:'<path d="M9 3h6l-1 5 4 3v9a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-9l4-3z"/>',
+ device:'<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+ pill:'<rect x="3" y="8" width="18" height="8" rx="4"/><path d="M12 8v8"/>',
+ truck:'<path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/>',
+ star:'<path d="M12 2l3 6.5 7 .8-5.2 4.7 1.5 7L12 17.8 5.7 21l1.5-7L2 9.3l7-.8z"/>'
 };
-function svgIcon(k, sw){ sw=sw||1.7; return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round">'+(ICONS[k]||ICONS.pill)+'</svg>'; }
+function ic(k,sw){sw=sw||1.7;return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+sw+'" stroke-linecap="round" stroke-linejoin="round">'+(IC[k]||IC.pill)+'</svg>';}
+function star(){return '<svg viewBox="0 0 24 24">'+IC.star+'</svg>';}
 
-const PHONE = "918957785613"; // Rudhra Medical WhatsApp number (country code, bina +)
+/* ================== DATA ================== */
+const CONCERNS=[
+ {k:"diabetes",en:"Diabetes",hi:"\u0921\u093e\u092f\u092c\u0940\u091f\u0940\u091c\u093c"},
+ {k:"heart",en:"Heart Care",hi:"\u0939\u0943\u0926\u092f \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"stomach",en:"Stomach Care",hi:"\u092a\u0947\u091f \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"liver",en:"Liver Care",hi:"\u0932\u093f\u0935\u0930 \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"bone",en:"Bone & Joint",hi:"\u0939\u0921\u094d\u0921\u0940 \u0935 \u091c\u094b\u0921\u093c"},
+ {k:"kidney",en:"Kidney Care",hi:"\u0915\u093f\u0921\u0928\u0940 \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"derma",en:"Derma Care",hi:"\u0924\u094d\u0935\u091a\u093e \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"lungs",en:"Respiratory",hi:"\u0936\u094d\u0935\u093e\u0938"},
+ {k:"eye",en:"Eye Care",hi:"\u0906\u0902\u0916\u094b\u0902 \u0915\u0940 \u0926\u0947\u0916\u092d\u093e\u0932"}
+];
+const CHECKUPS=[
+ {en:"Comprehensive Gold Full Body Checkup",hi:"\u0938\u092e\u094d\u092a\u0942\u0930\u094d\u0923 \u0917\u094b\u0932\u094d\u0921 \u092b\u0941\u0932 \u092c\u0949\u0921\u0940 \u091c\u093e\u0901\u091a",tests:72,price:2499,mrp:4998},
+ {en:"Good Health Silver Package",hi:"\u0917\u0941\u0921 \u0939\u0947\u0932\u094d\u0925 \u0938\u093f\u0932\u094d\u0935\u0930 \u092a\u0948\u0915\u0947\u091c",tests:45,price:749,mrp:1498},
+ {en:"Comprehensive Silver Full Body Checkup",hi:"\u0938\u092e\u094d\u092a\u0942\u0930\u094d\u0923 \u0938\u093f\u0932\u094d\u0935\u0930 \u092b\u0941\u0932 \u092c\u0949\u0921\u0940 \u091c\u093e\u0901\u091a",tests:60,price:1999,mrp:3998},
+ {en:"Good Health Gold Package",hi:"\u0917\u0941\u0921 \u0939\u0947\u0932\u094d\u0925 \u0917\u094b\u0932\u094d\u0921 \u092a\u0948\u0915\u0947\u091c",tests:55,price:999,mrp:1998},
+ {en:"Comprehensive Platinum Full Body Checkup",hi:"\u0938\u092e\u094d\u092a\u0942\u0930\u094d\u0923 \u092a\u094d\u0932\u0948\u091f\u093f\u0928\u092e \u092b\u0941\u0932 \u092c\u0949\u0921\u0940 \u091c\u093e\u0901\u091a",tests:90,price:3999,mrp:7998}
+];
+const PRODUCTS=[
+ {id:1,name:"Paracetamol 500mg Tablet",pack:"strip of 15 tablets",mrp:35,price:33,rx:false,rate:4.3,rev:128,cat:"fever"},
+ {id:2,name:"Dolo 650 Tablet",pack:"strip of 15 tablets",mrp:34,price:32,rx:false,rate:4.5,rev:3669,cat:"fever"},
+ {id:3,name:"Azithromycin 500mg Tablet",pack:"strip of 3 tablets",mrp:120,price:108,rx:true,rate:4.2,rev:94,cat:"antibiotic"},
+ {id:4,name:"Cetirizine 10mg Tablet",pack:"strip of 10 tablets",mrp:30,price:27,rx:false,rate:4.4,rev:226,cat:"allergy"},
+ {id:5,name:"ORS Powder",pack:"sachet of 21.8 g",mrp:25,price:22,rx:false,rate:4.3,rev:108,cat:"hydration"},
+ {id:6,name:"Pantoprazole 40mg Tablet",pack:"strip of 15 tablets",mrp:145,price:130,rx:true,rate:4.1,rev:57,cat:"acidity"},
+ {id:7,name:"Cough Syrup 100ml",pack:"bottle of 100 ml",mrp:110,price:99,rx:false,rate:4.3,rev:226,cat:"cough"},
+ {id:8,name:"Digital Thermometer",pack:"1 piece",mrp:250,price:210,rx:false,rate:4.5,rev:611,cat:"devices"},
+ {id:9,name:"Hand Sanitizer 500ml",pack:"bottle of 500 ml",mrp:180,price:150,rx:false,rate:4.2,rev:3372,cat:"hygiene"},
+ {id:10,name:"Vitamin D3 60000 IU Sachet",pack:"strip of 4 sachets",mrp:90,price:80,rx:false,rate:4.5,rev:1571,cat:"supplements"},
+ {id:11,name:"Glucose Powder",pack:"jar of 500 g",mrp:145,price:130,rx:false,rate:4.3,rev:1176,cat:"nutrition"},
+ {id:12,name:"Adhesive Plaster (Band-Aid)",pack:"box of 100 strips",mrp:120,price:105,rx:false,rate:4.3,rev:337,cat:"firstaid"},
+ {id:13,name:"Metformin 500mg Tablet",pack:"strip of 20 tablets",mrp:60,price:52,rx:true,rate:4.4,rev:352,cat:"diabetes"},
+ {id:14,name:"Amlodipine 5mg Tablet",pack:"strip of 15 tablets",mrp:55,price:48,rx:true,rate:4.2,rev:128,cat:"bp"},
+ {id:15,name:"Antacid Gel 170ml",pack:"bottle of 170 ml",mrp:130,price:115,rx:false,rate:4.3,rev:108,cat:"acidity"},
+ {id:16,name:"Vitamin C Chewable Tablet",pack:"strip of 10 tablets",mrp:95,price:85,rx:false,rate:4.5,rev:6,cat:"supplements"}
+];
+const CATS=[
+ {k:"vitamin",en:"Vitamins & Supplements",hi:"\u0935\u093f\u091f\u093e\u092e\u093f\u0928 \u0935 \u0938\u092a\u094d\u0932\u0940\u092e\u0947\u0902\u091f"},
+ {k:"drink",en:"Nutritional Drinks",hi:"\u092a\u094b\u0937\u0923 \u092a\u0947\u092f"},
+ {k:"skin",en:"Skin Care",hi:"\u0938\u094d\u0915\u093f\u0928 \u0915\u0947\u092f\u0930"},
+ {k:"hair",en:"Hair Care",hi:"\u092c\u093e\u0932\u094b\u0902 \u0915\u0940 \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"ayu",en:"Ayurveda",hi:"\u0906\u092f\u0941\u0930\u094d\u0935\u0947\u0926"},
+ {k:"pain",en:"Pain Relief",hi:"\u0926\u0930\u094d\u0926 \u0928\u093f\u0935\u093e\u0930\u0915"},
+ {k:"homeo",en:"Homeopathy",hi:"\u0939\u094b\u092e\u093f\u092f\u094b\u092a\u0948\u0925\u0940"},
+ {k:"baby",en:"Baby Care",hi:"\u0936\u093f\u0936\u0941 \u0926\u0947\u0916\u092d\u093e\u0932"},
+ {k:"device",en:"Health Devices",hi:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0909\u092a\u0915\u0930\u0923"},
+ {k:"wellness",en:"Wellness",hi:"\u0935\u0947\u0932\u0928\u0947\u0938"},
+ {k:"firstaid",en:"First Aid",hi:"\u092a\u094d\u0930\u093e\u0925\u092e\u093f\u0915 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e"},
+ {k:"pill",en:"All Medicines",hi:"\u0938\u092d\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901"}
+];
 
-/* ---------- State ---------- */
-let lang = localStorage.getItem("rudhra_lang") || "en";
-let cart = {};
-try { cart = JSON.parse(localStorage.getItem("rudhra_cart")||"{}"); } catch(e){ cart={}; }
-let activeCat = "All", query = "";
-const t = k => (T[lang] && T[lang][k]) || T.en[k] || "";
-function save(){ try{ localStorage.setItem("rudhra_cart", JSON.stringify(cart)); }catch(e){} }
+/* ================== STATE ================== */
+let lang=localStorage.getItem("rudhra_lang")||"en";
+let cart={}; try{cart=JSON.parse(localStorage.getItem("rudhra_cart")||"{}");}catch(e){cart={};}
+let query="";
+const t=k=>(T[lang]&&T[lang][k])||T.en[k]||"";
+function save(){try{localStorage.setItem("rudhra_cart",JSON.stringify(cart));}catch(e){}}
+const fmt=n=>"\u20b9"+n.toLocaleString("en-IN");
 
-/* ---------- Language ---------- */
+/* ================== LANGUAGE ================== */
 function setLang(l){
-  lang = l; try{ localStorage.setItem("rudhra_lang", l); }catch(e){}
-  document.documentElement.lang = (l==="hi"?"hi":"en");
-  document.getElementById("langEn").classList.toggle("active", l==="en");
-  document.getElementById("langHi").classList.toggle("active", l==="hi");
-  applyI18n(); buildCats(); buildSymptoms(); render(); updateCart();
-}
-function applyI18n(){
-  document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = t(el.getAttribute("data-i18n")); });
-  document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML = t(el.getAttribute("data-i18n-html")); });
-  document.querySelectorAll("[data-i18n-ph]").forEach(el=>{ el.placeholder = t(el.getAttribute("data-i18n-ph")); });
-  document.title = (lang==="hi") ? "\u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u2014 \u0924\u0940\u0928 \u091f\u0948\u092a \u092e\u0947\u0902 \u0926\u0935\u093e" : "Rudhra Medical \u2014 Order Medicines in 3 Taps";
+  lang=l; try{localStorage.setItem("rudhra_lang",l);}catch(e){}
+  document.documentElement.lang=l;
+  document.getElementById("lEn").classList.toggle("active",l==="en");
+  document.getElementById("lHi").classList.toggle("active",l==="hi");
+  document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.getAttribute("data-i18n")));
+  document.querySelectorAll("[data-i18n-ph]").forEach(el=>el.placeholder=t(el.getAttribute("data-i18n-ph")));
+  document.title=(l==="hi")?"\u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u2014 \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u0911\u0928\u0932\u093e\u0907\u0928 \u092b\u093e\u0930\u094d\u092e\u0947\u0938\u0940":"Rudhra Medical \u2014 India's Trusted Online Pharmacy";
+  buildConcerns();buildCheckups();buildCats();renderProducts();updateCart();
 }
 
-/* ---------- Categories ---------- */
+/* ================== BUILD SECTIONS ================== */
+function buildConcerns(){
+  document.getElementById("concernsGrid").innerHTML=CONCERNS.map(c=>
+    `<a class="concern" href="#shop" onclick="filterByConcern('${c.en}')"><span class="ci">${ic(c.k)}</span><span>${c[lang]}</span></a>`).join("");
+}
+function buildCheckups(){
+  document.getElementById("checkupRow").innerHTML=CHECKUPS.map((c,i)=>{
+    const off=Math.round((1-c.price/c.mrp)*100);
+    return `<div class="chk">
+      <div class="tagline"><span class="safe">SAFE</span> Rudhra Labs</div>
+      <h4>${c[lang]}</h4>
+      <div class="lab">${c.tests} ${lang==="hi"?"\u091f\u0947\u0938\u094d\u091f":"tests"} &middot; ${lang==="hi"?"\u0918\u0930 \u0938\u0947 \u0938\u0948\u092e\u094d\u092a\u0932":"home sample"}</div>
+      <div class="pr"><span class="p">${fmt(c.price)}</span><span class="m">${fmt(c.mrp)}</span><span class="d">${off}% ${t("off")}</span></div>
+      <button class="bk" onclick="bookCheckup('${c.en.replace(/'/g,"")}',${c.price})">${t("book")}</button>
+    </div>`;
+  }).join("");
+}
 function buildCats(){
-  const bar = document.getElementById("catBar"); bar.innerHTML="";
-  const all = {key:"All", label:(lang==="hi"?"\u0938\u092c":"All")};
-  const items = [all, ...CATS.map(c=>({key:c.key,label:c[lang]}))];
-  items.forEach(c=>{
-    const b=document.createElement("button");
-    b.className="chip"+(c.key===activeCat?" active":"");
-    b.textContent=c.label;
-    b.onclick=()=>{ activeCat=c.key; buildCats(); render(); };
-    bar.appendChild(b);
-  });
+  document.getElementById("catGrid").innerHTML=CATS.map(c=>
+    `<a class="cat" href="#shop"><span class="ic">${ic(c.k)}</span><span>${c[lang]}</span></a>`).join("");
 }
-
-/* ---------- Symptom chips ---------- */
-function buildSymptoms(){
-  const bar=document.getElementById("symptomBar"); bar.innerHTML="";
-  SYMPTOMS.forEach(s=>{
-    const b=document.createElement("button");
-    b.className="qchip";
-    b.innerHTML='<span class="qi">'+svgIcon(s.icon)+'</span>'+s[lang]+' <small>'+s.sub[lang]+'</small>';
-    b.onclick=()=>addCombo(s);
-    bar.appendChild(b);
-  });
-}
-
-/* ---------- Products ---------- */
-const grid=document.getElementById("grid");
-function render(){
+function renderProducts(){
   const list=PRODUCTS.filter(p=>{
-    const okCat=activeCat==="All"||p.cat===activeCat;
-    const q=query.trim().toLowerCase();
-    const okQ=!q||p.name.toLowerCase().includes(q)||catLabel(p.cat).toLowerCase().includes(q);
-    return okCat&&okQ;
+    if(!query) return true;
+    const q=query.toLowerCase();
+    return p.name.toLowerCase().includes(q)||p.cat.includes(q)||p.pack.toLowerCase().includes(q);
   });
-  document.getElementById("secTitle").textContent = query ? (t("searchResults")+query+t("searchResultsEnd")) : (activeCat==="All"?t("secDefault"):catLabel(activeCat));
-  document.getElementById("prodCount").textContent = list.length+" "+t("products");
-  grid.innerHTML="";
-  if(!list.length){ grid.innerHTML='<div class="empty">'+svgIcon("pill",1.4)+'<p>'+t("empty")+'</p></div>'; return; }
-  list.forEach(p=>{
+  const sub=document.getElementById("shopSub");
+  sub.textContent = query ? (t("resultFor")+' "'+query+'" \u00b7 '+list.length+" "+t("products")) : (PRODUCTS.length+" "+t("products")+" \u00b7 "+t("getBy"));
+  document.getElementById("productRow").innerHTML = list.length? list.map(p=>{
     const off=Math.round((1-p.price/p.mrp)*100);
-    const el=document.createElement("div"); el.className="card";
-    el.innerHTML=`
-      <div class="thumb">
-        ${p.rx?'<span class="tag rx">Rx</span>':'<span class="tag otc">OTC</span>'}
-        <span class="catp">${catLabel(p.cat)}</span>
-        ${svgIcon("pill",1.5)}
-      </div>
-      <div class="cbody">
+    return `<div class="pcard">
+      <div class="img">${p.rx?'<span class="rx">Rx</span>':''}${ic("pill",1.4)}</div>
+      <div class="body">
         <h4>${p.name}</h4>
         <div class="pack">${p.pack}</div>
-        <div class="stock"><span class="d"></span>${t("stock")}</div>
-        <div class="prow">
-          <span class="price">&#8377;${p.price}</span>
-          <span class="mrp">&#8377;${p.mrp}</span>
-          ${off>0?`<span class="off">${off}% off</span>`:''}
-        </div>
-        <button class="add ${cart[p.id]?'done':''}" data-id="${p.id}">${cart[p.id]?t("inCart")+" ("+cart[p.id]+")":t("add")}</button>
-      </div>`;
-    grid.appendChild(el);
-  });
-  grid.querySelectorAll(".add").forEach(b=> b.onclick=()=>addToCart(+b.dataset.id));
+        <span class="rating">${star()} ${p.rate} (${p.rev})</span>
+        <div class="pr"><span class="p">${fmt(p.price)}</span><span class="m">${fmt(p.mrp)}</span><span class="d">${off}% ${t("off")}</span></div>
+        <div class="getby">${ic("truck",2)} ${t("getBy")}</div>
+        <button class="add ${cart[p.id]?"done":""}" data-id="${p.id}">${cart[p.id]?t("inCart")+" ("+cart[p.id]+")":t("add")}</button>
+      </div>
+    </div>`;
+  }).join("") : `<div style="padding:30px;color:var(--muted)">${lang==="hi"?"\u0915\u0941\u091b \u0928\u0939\u0940\u0902 \u092e\u093f\u0932\u093e\u0964":"Nothing found."}</div>`;
+  document.getElementById("productRow").querySelectorAll(".add").forEach(b=>b.onclick=()=>addToCart(+b.dataset.id));
 }
 
-/* ---------- Cart ---------- */
-function addToCart(id){ cart[id]=(cart[id]||0)+1; save(); updateCart(); render(); toast(PRODUCTS.find(p=>p.id==id).name+" "+t("toastAdded")); }
-function changeQty(id,d){ cart[id]=(cart[id]||0)+d; if(cart[id]<=0) delete cart[id]; save(); updateCart(); render(); }
-function addCombo(s){ s.ids.forEach(id=> cart[id]=(cart[id]||0)+1); save(); updateCart(); render(); openCart(); toast(s[lang]+" "+t("toastCombo")); }
-function reorderLast(){ [1,5,4].forEach(id=> cart[id]=(cart[id]||0)+1); save(); updateCart(); render(); openCart(); toast(t("toastReorder")); }
+/* ================== CART ================== */
+function addToCart(id){cart[id]=(cart[id]||0)+1;save();updateCart();renderProducts();toast(PRODUCTS.find(p=>p.id==id).name+" "+t("added"));}
+function changeQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];save();updateCart();renderProducts();}
 function updateCart(){
-  const ids=Object.keys(cart);
-  const count=ids.reduce((s,id)=>s+cart[id],0);
+  const ids=Object.keys(cart),count=ids.reduce((s,id)=>s+cart[id],0);
   document.getElementById("cartCount").textContent=count;
   const box=document.getElementById("items");
-  if(!ids.length){
-    box.innerHTML='<div class="ecart">'+svgIcon("pill",1.4)+'<p>'+t("cartEmpty")+'</p></div>';
-  } else {
-    box.innerHTML=ids.map(id=>{
-      const p=PRODUCTS.find(x=>x.id==id);
-      return `<div class="ci">
-        <div class="ct">${svgIcon("pill")}</div>
-        <div class="info"><h5>${p.name}</h5><span>&#8377;${p.price} &times; ${cart[id]}</span></div>
-        <div class="qty"><button onclick="changeQty(${id},-1)">&minus;</button><span>${cart[id]}</span><button onclick="changeQty(${id},1)">+</button></div>
-      </div>`;
-    }).join("");
-  }
+  if(!ids.length){box.innerHTML='<div class="ecart">'+ic("pill",1.3)+'<p>'+t("emptyCart")+'</p></div>';}
+  else{box.innerHTML=ids.map(id=>{const p=PRODUCTS.find(x=>x.id==id);return `<div class="ci"><div class="ct">${ic("pill")}</div><div class="info"><h5>${p.name}</h5><span>${fmt(p.price)} &times; ${cart[id]}</span></div><div class="qty"><button onclick="changeQty(${id},-1)">&minus;</button><span>${cart[id]}</span><button onclick="changeQty(${id},1)">+</button></div></div>`;}).join("");}
   const total=ids.reduce((s,id)=>s+PRODUCTS.find(x=>x.id==id).price*cart[id],0);
   const mrpT=ids.reduce((s,id)=>s+PRODUCTS.find(x=>x.id==id).mrp*cart[id],0);
   document.getElementById("sumItems").textContent=count;
-  document.getElementById("sumSave").textContent=count?"\u20b9"+(mrpT-total):"\u2013";
-  document.getElementById("sumTotal").innerHTML="\u20b9"+total;
+  document.getElementById("sumSave").textContent=count?fmt(mrpT-total):"\u2013";
+  document.getElementById("sumTotal").textContent=fmt(total);
   document.getElementById("waBtn").disabled=!count;
-  document.getElementById("mbarCount").textContent = count?(count+" "+(lang==="hi"?"\u0906\u0907\u091f\u092e \u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902":"items in cart")):t("mbarEmpty");
-  document.getElementById("mbarTotal").textContent = count?((lang==="hi"?"\u0915\u0941\u0932 \u20b9":"Total \u20b9")+total):t("mbarSee");
 }
-function openCart(){ document.getElementById("drawer").classList.add("open"); document.getElementById("overlay").classList.add("open"); }
-function closeCart(){ document.getElementById("drawer").classList.remove("open"); document.getElementById("overlay").classList.remove("open"); }
+function openCart(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("open");}
+function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("open");}
 
-/* ---------- Prescription ---------- */
-function prescriptionModal(){
-  let msg = t("waHead")+"\n\n"+
-    (lang==="hi"
-      ? "\u092e\u0948\u0902 \u0905\u092a\u0928\u0947 \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u092d\u0947\u091c \u0930\u0939\u093e/\u0930\u0939\u0940 \u0939\u0942\u0901\u0964 \u0915\u0943\u092a\u092f\u093e \u0926\u0935\u093e \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0915\u0947 \u092c\u0924\u093e\u092f\u0947\u0902\u0964\n\n"
-      : "I am sending a photo of my prescription. Please prepare the medicines and let me know.\n\n")+
-    t("rxMsgName")+"\n"+t("rxMsgAddr");
-  window.open("https://wa.me/"+PHONE+"?text="+encodeURIComponent(msg),"_blank");
-}
-
-/* ---------- WhatsApp order ---------- */
+/* ================== WHATSAPP ================== */
 function orderWhatsApp(){
-  const ids=Object.keys(cart); if(!ids.length) return;
-  let msg=t("waHead")+"\n\n", total=0;
-  ids.forEach((id,i)=>{
-    const p=PRODUCTS.find(x=>x.id==id), line=p.price*cart[id]; total+=line;
-    msg+=`${i+1}. ${p.name} (${p.pack}) x${cart[id]} = \u20b9${line}${p.rx?" [Rx]":""}\n`;
-  });
-  msg+=`\n*${t("sumTotal")}: \u20b9${total}*\n\n${t("waName")}\n${t("waAddr")}\n${t("waRxNote")}`;
+  const ids=Object.keys(cart); if(!ids.length)return;
+  let msg=t("waHead")+"\n\n",total=0;
+  ids.forEach((id,i)=>{const p=PRODUCTS.find(x=>x.id==id),line=p.price*cart[id];total+=line;msg+=`${i+1}. ${p.name} (${p.pack}) x${cart[id]} = \u20b9${line}${p.rx?" [Rx]":""}\n`;});
+  msg+=`\n*${t("sumTotal")}: \u20b9${total}*\n\n${t("waName")}\n${t("waAddr")}\n${t("waRx")}`;
   window.open("https://wa.me/"+PHONE+"?text="+encodeURIComponent(msg),"_blank");
 }
-
-/* ---------- Search + voice ---------- */
-const sTop=document.getElementById("searchTop"), sHero=document.getElementById("searchHero");
-function onSearch(v){ query=v; if(document.activeElement!==sTop) sTop.value=v; if(document.activeElement!==sHero) sHero.value=v; render(); }
-sTop.addEventListener("input",e=>onSearch(e.target.value));
-sHero.addEventListener("input",e=>onSearch(e.target.value));
-sHero.addEventListener("focus",()=>{ document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"}); });
-function setupMic(btn){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){ btn.style.display="none"; return; }
-  btn.onclick=()=>{
-    const r=new SR(); r.lang=(lang==="hi"?"hi-IN":"en-IN"); r.interimResults=false;
-    btn.classList.add("on");
-    r.onresult=e=>{ const txt=e.results[0][0].transcript; onSearch(txt); toast(t("toastSearched")+' "'+txt+'"'); };
-    r.onend=()=>btn.classList.remove("on");
-    r.onerror=()=>btn.classList.remove("on");
-    r.start();
-  };
+function prescriptionModal(){
+  const msg=t("waHead")+"\n\n"+(lang==="hi"?"\u092e\u0948\u0902 \u0905\u092a\u0928\u0947 \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u092d\u0947\u091c \u0930\u0939\u093e/\u0930\u0939\u0940 \u0939\u0942\u0901\u0964 \u0915\u0943\u092a\u092f\u093e \u0926\u0935\u093e \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0915\u0947 \u092c\u0924\u093e\u090f\u0901\u0964\n\n":"I am sending a photo of my prescription. Please prepare the medicines and let me know.\n\n")+t("waName")+"\n"+t("waAddr");
+  window.open("https://wa.me/"+PHONE+"?text="+encodeURIComponent(msg),"_blank");
 }
-setupMic(document.getElementById("micTop"));
+function bookCheckup(name,price){
+  const msg=t("waHead")+"\n\n"+(lang==="hi"?"\u092e\u0948\u0902 \u092f\u0939 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u091c\u093e\u0901\u091a \u092c\u0941\u0915 \u0915\u0930\u0928\u093e \u091a\u093e\u0939\u0924\u093e/\u091a\u093e\u0939\u0924\u0940 \u0939\u0942\u0901: ":"I would like to book this health checkup: ")+name+" (\u20b9"+price+")\n\n"+t("waName")+"\n"+t("waAddr");
+  window.open("https://wa.me/"+PHONE+"?text="+encodeURIComponent(msg),"_blank"); toast(t("booked"));
+}
+function callBack(){
+  const ph=document.getElementById("cbPhone").value.trim();
+  const msg=t("waHead")+"\n\n"+(lang==="hi"?"\u0915\u0943\u092a\u092f\u093e \u092e\u0941\u091d\u0947 \u0915\u0949\u0932 \u092c\u0948\u0915 \u0915\u0930\u0947\u0902\u0964":"Please call me back.")+"\n"+(lang==="hi"?"\u092e\u094b\u092c\u093e\u0907\u0932: ":"Mobile: ")+(ph||"__")+"\n\n"+t("waName")+"\n"+t("waAddr");
+  window.open("https://wa.me/"+PHONE+"?text="+encodeURIComponent(msg),"_blank"); toast(t("callbk"));
+}
+function filterByConcern(){/* scroll handled by anchor */}
 
-/* ---------- Toast ---------- */
-let tTimer;
-function toast(m){ const el=document.getElementById("toast"); document.getElementById("toastMsg").textContent=m; el.classList.add("show"); clearTimeout(tTimer); tTimer=setTimeout(()=>el.classList.remove("show"),1900); }
+/* ================== SEARCH / TOAST ================== */
+const sEl=document.getElementById("search");
+sEl.addEventListener("input",e=>{query=e.target.value;renderProducts();});
+let tt; function toast(m){const el=document.getElementById("toast");el.textContent=m;el.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>el.classList.remove("show"),1900);}
 
-/* ---------- Init ---------- */
+/* ================== INIT ================== */
 setLang(lang);
 </script>
 </body>
