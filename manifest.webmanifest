@@ -1,0 +1,37 @@
+{
+  "name": "Shree Rudra Medical Agencies",
+  "short_name": "Shree Rudra",
+  "description": "Jhansi's trusted online medical store. Order medicines from home and get them delivered to your door, even in an emergency.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6FAF9",
+  "theme_color": "#0A6B3D",
+  "lang": "en-IN",
+  "categories": [
+    "medical",
+    "health",
+    "shopping"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
