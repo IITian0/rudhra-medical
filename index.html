@@ -125,6 +125,12 @@ section.blk{margin-top:30px}
 /* horizontal scroller */
 .hscroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
 .hscroll>*{scroll-snap-align:start;flex:none}
+.catfilter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cchip{border:1px solid var(--line);background:#fff;color:#46575e;border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
+.cchip:hover{border-color:var(--g);color:var(--g-dark)}
+.cchip.active{background:var(--g);border-color:var(--g);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.pgrid .pcard{width:auto}
 
 /* checkup card */
 .chk{width:250px;border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s}
@@ -364,7 +370,8 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
       <div><h2 id="shopTitle" data-i18n="shopH">Featured products</h2><div class="sub" id="shopSub"></div></div>
       <a href="#" onclick="return false" class="seeall" data-i18n="seeAll">See all</a>
     </div>
-    <div class="hscroll" id="productRow"></div>
+    <div class="catfilter" id="catFilter"></div>
+    <div class="pgrid" id="productRow"></div>
   </section>
 
   <!-- CATEGORIES -->
@@ -451,8 +458,8 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
 <script>
 /* ================== TRANSLATIONS ================== */
 const T={
- en:{needHelp:"Need help?",callNow:"Call now",navMed:"Medicines",navLab:"Lab Tests",navDoc:"Consult Doctors",navConcern:"Health Concerns",navAyu:"Ayurveda",navOffers:"Offers",login:"Login",cart:"Cart",enterCity:"Enter your city",searchPh:"Search for medicines and health products",quickBuy:"QUICK BUY!",quickSub:"Up to 25% off on medicines",quickOrder:"Quick order",heroH:"Your trusted neighbourhood pharmacy, now online.",heroP:"Order genuine medicines, upload your prescription, and get free delivery to your door in about 30 minutes.",orderRx:"Order with prescription",callOrder:"Call to order",uploadH:"Have a prescription?",uploadP:"Send a clear photo on WhatsApp. Our pharmacist will prepare your medicines.",uploadBtn:"Upload prescription",concernH:"Shop by health concerns",seeAll:"See all",checkupH:"Full body health checkups",checkupSub:"Booked through partner labs \u00b7 home sample collection",shopH:"Featured products",catH:"Popular categories",oncallH:"Order medicines on call",oncallP:"Call us at +91 89577 85613 or request a call back \u2014 we\u2019ll take your order on the phone.",cbPh:"Enter your mobile number",cbBtn:"Get a call back",footAbout:"Your neighbourhood family chemist \u2014 genuine medicines, honest prices and fast home delivery.",footKnow:"Know us",footAboutUs:"About us",footContactUs:"Contact us",footCareers:"Careers",footPolicy:"Our policies",footPrivacy:"Privacy policy",footTerms:"Terms & conditions",footReturn:"Return policy",footContact:"Contact",footWa:"WhatsApp order",footHours:"Every day, 9:00 AM \u2013 10:00 PM",footLic:"Drug Licence: XX-XXXXXX \u00b7 GSTIN: 00XXXXX0000X0X0",footNote:"\u00a9 2026 Shree Rudra Medical Agencies. Sample website \u2014 replace with your real details.",cartTitle:"Your cart",sumItems:"Items",sumSave:"Saved vs MRP",sumTotal:"Total",waBtn:"Send order on WhatsApp",payNote:"We will call / WhatsApp you to confirm your order.",add:"Add",inCart:"Added",book:"Book now",off:"off",products:"products",getBy:"Get by Today",emptyCart:"Your cart is empty. Add products to start.",added:"added to cart",resultFor:"Results for",booked:"Booking request sent on WhatsApp",callbk:"Call-back request sent on WhatsApp",waHead:"*Shree Rudra Medical Agencies \u2014 New Order*",waName:"My name: ",waAddr:"Address: ",waRx:"(Prescription photo attached for Rx medicines)"},
- hi:{needHelp:"\u092e\u0926\u0926 \u091a\u093e\u0939\u093f\u090f?",callNow:"\u0905\u092d\u0940 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902",navMed:"\u0926\u0935\u093e\u0907\u092f\u093e\u0901",navLab:"\u0932\u0948\u092c \u091f\u0947\u0938\u094d\u091f",navDoc:"\u0921\u0949\u0915\u094d\u091f\u0930 \u0938\u0932\u093e\u0939",navConcern:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0938\u092e\u0938\u094d\u092f\u093e\u090f\u0901",navAyu:"\u0906\u092f\u0941\u0930\u094d\u0935\u0947\u0926",navOffers:"\u0911\u095e\u0930",login:"\u0932\u0949\u0917\u093f\u0928",cart:"\u0915\u093e\u0930\u094d\u091f",enterCity:"\u0905\u092a\u0928\u093e \u0936\u0939\u0930 \u0926\u0930\u094d\u091c \u0915\u0930\u0947\u0902",searchPh:"\u0926\u0935\u093e\u0907\u092f\u093e\u0901 \u0914\u0930 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0909\u0924\u094d\u092a\u093e\u0926 \u0916\u094b\u091c\u0947\u0902",quickBuy:"\u0915\u094d\u0935\u093f\u0915 \u092c\u093e\u092f!",quickSub:"\u0926\u0935\u093e\u0907\u092f\u094b\u0902 \u092a\u0930 25% \u0924\u0915 \u091b\u0942\u091f",quickOrder:"\u0915\u094d\u0935\u093f\u0915 \u0911\u0930\u094d\u0921\u0930",heroH:"\u0906\u092a\u0915\u0940 \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u092e\u094b\u0939\u0932\u094d\u0932\u093e \u092b\u093e\u0930\u094d\u092e\u0947\u0938\u0940, \u0905\u092c \u0911\u0928\u0932\u093e\u0907\u0928\u0964",heroP:"\u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901 \u092e\u0902\u0917\u093e\u090f\u0901, \u092a\u0930\u094d\u091a\u093e \u0905\u092a\u0932\u094b\u0921 \u0915\u0930\u0947\u0902, \u0914\u0930 \u0932\u0917\u092d\u0917 30 \u092e\u093f\u0928\u091f \u092e\u0947\u0902 \u0918\u0930 \u092a\u0930 \u092e\u0941\u095e\u094d\u0924 \u0921\u093f\u0932\u0940\u0935\u0930\u0940 \u092a\u093e\u090f\u0901\u0964",orderRx:"\u092a\u0930\u094d\u091a\u0947 \u0938\u0947 \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u0947\u0902",callOrder:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0947 \u0932\u093f\u090f \u0915\u0949\u0932 \u0915\u0930\u0947\u0902",uploadH:"\u092a\u0930\u094d\u091a\u093e \u0939\u0948 \u0906\u092a\u0915\u0947 \u092a\u093e\u0938?",uploadP:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0938\u093e\u095e\u093c \u095e\u094b\u091f\u094b \u092d\u0947\u091c\u0947\u0902\u0964 \u0939\u092e\u093e\u0930\u093e \u095e\u093e\u0930\u094d\u092e\u093e\u0938\u093f\u0938\u094d\u091f \u0926\u0935\u093e \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0947\u0917\u093e\u0964",uploadBtn:"\u092a\u0930\u094d\u091a\u093e \u0905\u092a\u0932\u094b\u0921 \u0915\u0930\u0947\u0902",concernH:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0938\u092e\u0938\u094d\u092f\u093e \u0915\u0947 \u0905\u0928\u0941\u0938\u093e\u0930 \u0916\u0930\u0940\u0926\u0947\u0902",seeAll:"\u0938\u092d\u0940 \u0926\u0947\u0916\u0947\u0902",checkupH:"\u092a\u0942\u0930\u0947 \u0936\u0930\u0940\u0930 \u0915\u0940 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u091c\u093e\u0901\u091a",checkupSub:"\u092a\u093e\u0930\u094d\u091f\u0928\u0930 \u0932\u0948\u092c \u0926\u094d\u0935\u093e\u0930\u093e \u00b7 \u0918\u0930 \u0938\u0947 \u0938\u0948\u092e\u094d\u092a\u0932 \u0915\u0932\u0947\u0915\u094d\u0936\u0928",shopH:"\u092a\u094d\u0930\u092e\u0941\u0916 \u0909\u0924\u094d\u092a\u093e\u0926",catH:"\u0932\u094b\u0915\u092a\u094d\u0930\u093f\u092f \u0936\u094d\u0930\u0947\u0923\u093f\u092f\u093e\u0901",oncallH:"\u0915\u0949\u0932 \u092a\u0930 \u0926\u0935\u093e \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u0947\u0902",oncallP:"+91 89577 85613 \u092a\u0930 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902 \u092f\u093e \u0915\u0949\u0932 \u092c\u0948\u0915 \u092e\u093e\u0902\u0917\u0947\u0902 \u2014 \u0939\u092e \u092b\u093c\u094b\u0928 \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u0932\u0947 \u0932\u0947\u0902\u0917\u0947\u0964",cbPh:"\u0905\u092a\u0928\u093e \u092e\u094b\u092c\u093e\u0907\u0932 \u0928\u0902\u092c\u0930 \u0921\u093e\u0932\u0947\u0902",cbBtn:"\u0915\u0949\u0932 \u092c\u0948\u0915 \u092a\u093e\u090f\u0901",footAbout:"\u0906\u092a\u0915\u0947 \u092e\u094b\u0939\u0932\u094d\u0932\u0947 \u0915\u093e \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u095e\u0948\u092e\u093f\u0932\u0940 \u0915\u0947\u092e\u093f\u0938\u094d\u091f \u2014 \u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901, \u0938\u0939\u0940 \u0926\u093e\u092e \u0914\u0930 \u0924\u0947\u091c\u093c \u0939\u094b\u092e \u0921\u093f\u0932\u0940\u0935\u0930\u0940\u0964",footKnow:"\u0939\u092e\u093e\u0930\u0947 \u092c\u093e\u0930\u0947 \u092e\u0947\u0902",footAboutUs:"\u0939\u092e\u093e\u0930\u0947 \u092c\u093e\u0930\u0947 \u092e\u0947\u0902",footContactUs:"\u0938\u0902\u092a\u0930\u094d\u0915 \u0915\u0930\u0947\u0902",footCareers:"\u0915\u0930\u093f\u092f\u0930",footPolicy:"\u0939\u092e\u093e\u0930\u0940 \u0928\u0940\u0924\u093f\u092f\u093e\u0901",footPrivacy:"\u0917\u094b\u092a\u0928\u0940\u092f\u0924\u093e \u0928\u0940\u0924\u093f",footTerms:"\u0928\u093f\u092f\u092e \u0935 \u0936\u0930\u094d\u0924\u0947\u0902",footReturn:"\u0935\u093e\u092a\u0938\u0940 \u0928\u0940\u0924\u093f",footContact:"\u0938\u0902\u092a\u0930\u094d\u0915",footWa:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0911\u0930\u094d\u0921\u0930",footHours:"\u0930\u094b\u091c\u093c, \u0938\u0941\u092c\u0939 9:00 \u2013 \u0930\u093e\u0924 10:00",footLic:"\u0921\u094d\u0930\u0917 \u0932\u093e\u0907\u0938\u0947\u0902\u0938: XX-XXXXXX \u00b7 GSTIN: 00XXXXX0000X0X0",footNote:"\u00a9 2026 \u0936\u094d\u0930\u0940 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u090f\u091c\u0947\u0902\u0938\u0940\u095b\u0964 \u0938\u0948\u092e\u094d\u092a\u0932 \u0935\u0947\u092c\u0938\u093e\u0907\u091f \u2014 \u0905\u092a\u0928\u0940 \u0905\u0938\u0932\u0940 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0938\u0947 \u092c\u0926\u0932\u0947\u0902\u0964",cartTitle:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f",sumItems:"\u0906\u0907\u091f\u092e",sumSave:"MRP \u092a\u0930 \u092c\u091a\u0924",sumTotal:"\u0915\u0941\u0932",waBtn:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u092d\u0947\u091c\u0947\u0902",payNote:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0928\u095e\u0930\u094d\u092e \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0939\u092e \u0915\u0949\u0932/\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0915\u0930\u0947\u0902\u0917\u0947\u0964",add:"\u091c\u094b\u0921\u093c\u0947\u0902",inCart:"\u091c\u094b\u0921\u093c\u093e",book:"\u092c\u0941\u0915 \u0915\u0930\u0947\u0902",off:"\u091b\u0942\u091f",products:"\u0909\u0924\u094d\u092a\u093e\u0926",getBy:"\u0906\u091c \u092a\u093e\u090f\u0901",emptyCart:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f \u0916\u093e\u0932\u0940 \u0939\u0948\u0964 \u0936\u0941\u0930\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0909\u0924\u094d\u092a\u093e\u0926 \u091c\u094b\u0921\u093c\u0947\u0902\u0964",added:"\u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u091c\u094b\u0921\u093c\u093e",resultFor:"\u0916\u094b\u091c \u092a\u0930\u093f\u0923\u093e\u092e",booked:"\u092c\u0941\u0915\u093f\u0902\u0917 \u0905\u0928\u0941\u0930\u094b\u0927 \u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u092d\u0947\u091c\u093e",callbk:"\u0915\u0949\u0932 \u092c\u0948\u0915 \u0905\u0928\u0941\u0930\u094b\u0927 \u092d\u0947\u091c\u093e",waHead:"*\u0936\u094d\u0930\u0940 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u090f\u091c\u0947\u0902\u0938\u0940\u095b \u2014 \u0928\u092f\u093e \u0911\u0930\u094d\u0921\u0930*",waName:"\u092e\u0947\u0930\u093e \u0928\u093e\u092e: ",waAddr:"\u092a\u0924\u093e: ",waRx:"(Rx \u0926\u0935\u093e\u0913\u0902 \u0915\u0947 \u0932\u093f\u090f \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u0938\u0902\u0932\u0917\u094d\u0928)"}
+ en:{needHelp:"Need help?",callNow:"Call now",navMed:"Medicines",navLab:"Lab Tests",navDoc:"Consult Doctors",navConcern:"Health Concerns",navAyu:"Ayurveda",navOffers:"Offers",login:"Login",cart:"Cart",enterCity:"Enter your city",searchPh:"Search for medicines and health products",quickBuy:"QUICK BUY!",quickSub:"Up to 25% off on medicines",quickOrder:"Quick order",heroH:"Your trusted neighbourhood pharmacy, now online.",heroP:"Order genuine medicines, upload your prescription, and get free delivery to your door in about 30 minutes.",orderRx:"Order with prescription",callOrder:"Call to order",uploadH:"Have a prescription?",uploadP:"Send a clear photo on WhatsApp. Our pharmacist will prepare your medicines.",uploadBtn:"Upload prescription",concernH:"Shop by health concerns",seeAll:"See all",checkupH:"Full body health checkups",checkupSub:"Booked through partner labs \u00b7 home sample collection",shopH:"Our products",catH:"Popular categories",oncallH:"Order medicines on call",oncallP:"Call us at +91 89577 85613 or request a call back \u2014 we\u2019ll take your order on the phone.",cbPh:"Enter your mobile number",cbBtn:"Get a call back",footAbout:"Your neighbourhood family chemist \u2014 genuine medicines, honest prices and fast home delivery.",footKnow:"Know us",footAboutUs:"About us",footContactUs:"Contact us",footCareers:"Careers",footPolicy:"Our policies",footPrivacy:"Privacy policy",footTerms:"Terms & conditions",footReturn:"Return policy",footContact:"Contact",footWa:"WhatsApp order",footHours:"Every day, 9:00 AM \u2013 10:00 PM",footLic:"Drug Licence: XX-XXXXXX \u00b7 GSTIN: 00XXXXX0000X0X0",footNote:"\u00a9 2026 Shree Rudra Medical Agencies. Sample website \u2014 replace with your real details.",cartTitle:"Your cart",sumItems:"Items",sumSave:"Saved vs MRP",sumTotal:"Total",waBtn:"Send order on WhatsApp",payNote:"We will call / WhatsApp you to confirm your order.",add:"Add",inCart:"Added",book:"Book now",off:"off",products:"products",getBy:"Get by Today",emptyCart:"Your cart is empty. Add products to start.",added:"added to cart",resultFor:"Results for",booked:"Booking request sent on WhatsApp",callbk:"Call-back request sent on WhatsApp",waHead:"*Shree Rudra Medical Agencies \u2014 New Order*",waName:"My name: ",waAddr:"Address: ",waRx:"(Prescription photo attached for Rx medicines)"},
+ hi:{needHelp:"\u092e\u0926\u0926 \u091a\u093e\u0939\u093f\u090f?",callNow:"\u0905\u092d\u0940 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902",navMed:"\u0926\u0935\u093e\u0907\u092f\u093e\u0901",navLab:"\u0932\u0948\u092c \u091f\u0947\u0938\u094d\u091f",navDoc:"\u0921\u0949\u0915\u094d\u091f\u0930 \u0938\u0932\u093e\u0939",navConcern:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0938\u092e\u0938\u094d\u092f\u093e\u090f\u0901",navAyu:"\u0906\u092f\u0941\u0930\u094d\u0935\u0947\u0926",navOffers:"\u0911\u095e\u0930",login:"\u0932\u0949\u0917\u093f\u0928",cart:"\u0915\u093e\u0930\u094d\u091f",enterCity:"\u0905\u092a\u0928\u093e \u0936\u0939\u0930 \u0926\u0930\u094d\u091c \u0915\u0930\u0947\u0902",searchPh:"\u0926\u0935\u093e\u0907\u092f\u093e\u0901 \u0914\u0930 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0909\u0924\u094d\u092a\u093e\u0926 \u0916\u094b\u091c\u0947\u0902",quickBuy:"\u0915\u094d\u0935\u093f\u0915 \u092c\u093e\u092f!",quickSub:"\u0926\u0935\u093e\u0907\u092f\u094b\u0902 \u092a\u0930 25% \u0924\u0915 \u091b\u0942\u091f",quickOrder:"\u0915\u094d\u0935\u093f\u0915 \u0911\u0930\u094d\u0921\u0930",heroH:"\u0906\u092a\u0915\u0940 \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u092e\u094b\u0939\u0932\u094d\u0932\u093e \u092b\u093e\u0930\u094d\u092e\u0947\u0938\u0940, \u0905\u092c \u0911\u0928\u0932\u093e\u0907\u0928\u0964",heroP:"\u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901 \u092e\u0902\u0917\u093e\u090f\u0901, \u092a\u0930\u094d\u091a\u093e \u0905\u092a\u0932\u094b\u0921 \u0915\u0930\u0947\u0902, \u0914\u0930 \u0932\u0917\u092d\u0917 30 \u092e\u093f\u0928\u091f \u092e\u0947\u0902 \u0918\u0930 \u092a\u0930 \u092e\u0941\u095e\u094d\u0924 \u0921\u093f\u0932\u0940\u0935\u0930\u0940 \u092a\u093e\u090f\u0901\u0964",orderRx:"\u092a\u0930\u094d\u091a\u0947 \u0938\u0947 \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u0947\u0902",callOrder:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0947 \u0932\u093f\u090f \u0915\u0949\u0932 \u0915\u0930\u0947\u0902",uploadH:"\u092a\u0930\u094d\u091a\u093e \u0939\u0948 \u0906\u092a\u0915\u0947 \u092a\u093e\u0938?",uploadP:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0938\u093e\u095e\u093c \u095e\u094b\u091f\u094b \u092d\u0947\u091c\u0947\u0902\u0964 \u0939\u092e\u093e\u0930\u093e \u095e\u093e\u0930\u094d\u092e\u093e\u0938\u093f\u0938\u094d\u091f \u0926\u0935\u093e \u0924\u0948\u092f\u093e\u0930 \u0915\u0930\u0947\u0917\u093e\u0964",uploadBtn:"\u092a\u0930\u094d\u091a\u093e \u0905\u092a\u0932\u094b\u0921 \u0915\u0930\u0947\u0902",concernH:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0938\u092e\u0938\u094d\u092f\u093e \u0915\u0947 \u0905\u0928\u0941\u0938\u093e\u0930 \u0916\u0930\u0940\u0926\u0947\u0902",seeAll:"\u0938\u092d\u0940 \u0926\u0947\u0916\u0947\u0902",checkupH:"\u092a\u0942\u0930\u0947 \u0936\u0930\u0940\u0930 \u0915\u0940 \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u091c\u093e\u0901\u091a",checkupSub:"\u092a\u093e\u0930\u094d\u091f\u0928\u0930 \u0932\u0948\u092c \u0926\u094d\u0935\u093e\u0930\u093e \u00b7 \u0918\u0930 \u0938\u0947 \u0938\u0948\u092e\u094d\u092a\u0932 \u0915\u0932\u0947\u0915\u094d\u0936\u0928",shopH:"\u0939\u092e\u093e\u0930\u0947 \u0909\u0924\u094d\u092a\u093e\u0926",catH:"\u0932\u094b\u0915\u092a\u094d\u0930\u093f\u092f \u0936\u094d\u0930\u0947\u0923\u093f\u092f\u093e\u0901",oncallH:"\u0915\u0949\u0932 \u092a\u0930 \u0926\u0935\u093e \u0911\u0930\u094d\u0921\u0930 \u0915\u0930\u0947\u0902",oncallP:"+91 89577 85613 \u092a\u0930 \u0915\u0949\u0932 \u0915\u0930\u0947\u0902 \u092f\u093e \u0915\u0949\u0932 \u092c\u0948\u0915 \u092e\u093e\u0902\u0917\u0947\u0902 \u2014 \u0939\u092e \u092b\u093c\u094b\u0928 \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u0932\u0947 \u0932\u0947\u0902\u0917\u0947\u0964",cbPh:"\u0905\u092a\u0928\u093e \u092e\u094b\u092c\u093e\u0907\u0932 \u0928\u0902\u092c\u0930 \u0921\u093e\u0932\u0947\u0902",cbBtn:"\u0915\u0949\u0932 \u092c\u0948\u0915 \u092a\u093e\u090f\u0901",footAbout:"\u0906\u092a\u0915\u0947 \u092e\u094b\u0939\u0932\u094d\u0932\u0947 \u0915\u093e \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u095e\u0948\u092e\u093f\u0932\u0940 \u0915\u0947\u092e\u093f\u0938\u094d\u091f \u2014 \u0905\u0938\u0932\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901, \u0938\u0939\u0940 \u0926\u093e\u092e \u0914\u0930 \u0924\u0947\u091c\u093c \u0939\u094b\u092e \u0921\u093f\u0932\u0940\u0935\u0930\u0940\u0964",footKnow:"\u0939\u092e\u093e\u0930\u0947 \u092c\u093e\u0930\u0947 \u092e\u0947\u0902",footAboutUs:"\u0939\u092e\u093e\u0930\u0947 \u092c\u093e\u0930\u0947 \u092e\u0947\u0902",footContactUs:"\u0938\u0902\u092a\u0930\u094d\u0915 \u0915\u0930\u0947\u0902",footCareers:"\u0915\u0930\u093f\u092f\u0930",footPolicy:"\u0939\u092e\u093e\u0930\u0940 \u0928\u0940\u0924\u093f\u092f\u093e\u0901",footPrivacy:"\u0917\u094b\u092a\u0928\u0940\u092f\u0924\u093e \u0928\u0940\u0924\u093f",footTerms:"\u0928\u093f\u092f\u092e \u0935 \u0936\u0930\u094d\u0924\u0947\u0902",footReturn:"\u0935\u093e\u092a\u0938\u0940 \u0928\u0940\u0924\u093f",footContact:"\u0938\u0902\u092a\u0930\u094d\u0915",footWa:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0911\u0930\u094d\u0921\u0930",footHours:"\u0930\u094b\u091c\u093c, \u0938\u0941\u092c\u0939 9:00 \u2013 \u0930\u093e\u0924 10:00",footLic:"\u0921\u094d\u0930\u0917 \u0932\u093e\u0907\u0938\u0947\u0902\u0938: XX-XXXXXX \u00b7 GSTIN: 00XXXXX0000X0X0",footNote:"\u00a9 2026 \u0936\u094d\u0930\u0940 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u090f\u091c\u0947\u0902\u0938\u0940\u095b\u0964 \u0938\u0948\u092e\u094d\u092a\u0932 \u0935\u0947\u092c\u0938\u093e\u0907\u091f \u2014 \u0905\u092a\u0928\u0940 \u0905\u0938\u0932\u0940 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0938\u0947 \u092c\u0926\u0932\u0947\u0902\u0964",cartTitle:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f",sumItems:"\u0906\u0907\u091f\u092e",sumSave:"MRP \u092a\u0930 \u092c\u091a\u0924",sumTotal:"\u0915\u0941\u0932",waBtn:"\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u0911\u0930\u094d\u0921\u0930 \u092d\u0947\u091c\u0947\u0902",payNote:"\u0911\u0930\u094d\u0921\u0930 \u0915\u0928\u095e\u0930\u094d\u092e \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0939\u092e \u0915\u0949\u0932/\u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u0915\u0930\u0947\u0902\u0917\u0947\u0964",add:"\u091c\u094b\u0921\u093c\u0947\u0902",inCart:"\u091c\u094b\u0921\u093c\u093e",book:"\u092c\u0941\u0915 \u0915\u0930\u0947\u0902",off:"\u091b\u0942\u091f",products:"\u0909\u0924\u094d\u092a\u093e\u0926",getBy:"\u0906\u091c \u092a\u093e\u090f\u0901",emptyCart:"\u0906\u092a\u0915\u093e \u0915\u093e\u0930\u094d\u091f \u0916\u093e\u0932\u0940 \u0939\u0948\u0964 \u0936\u0941\u0930\u0942 \u0915\u0930\u0928\u0947 \u0915\u0947 \u0932\u093f\u090f \u0909\u0924\u094d\u092a\u093e\u0926 \u091c\u094b\u0921\u093c\u0947\u0902\u0964",added:"\u0915\u093e\u0930\u094d\u091f \u092e\u0947\u0902 \u091c\u094b\u0921\u093c\u093e",resultFor:"\u0916\u094b\u091c \u092a\u0930\u093f\u0923\u093e\u092e",booked:"\u092c\u0941\u0915\u093f\u0902\u0917 \u0905\u0928\u0941\u0930\u094b\u0927 \u0935\u094d\u0939\u093e\u091f\u094d\u0938\u090f\u092a \u092a\u0930 \u092d\u0947\u091c\u093e",callbk:"\u0915\u0949\u0932 \u092c\u0948\u0915 \u0905\u0928\u0941\u0930\u094b\u0927 \u092d\u0947\u091c\u093e",waHead:"*\u0936\u094d\u0930\u0940 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u090f\u091c\u0947\u0902\u0938\u0940\u095b \u2014 \u0928\u092f\u093e \u0911\u0930\u094d\u0921\u0930*",waName:"\u092e\u0947\u0930\u093e \u0928\u093e\u092e: ",waAddr:"\u092a\u0924\u093e: ",waRx:"(Rx \u0926\u0935\u093e\u0913\u0902 \u0915\u0947 \u0932\u093f\u090f \u092a\u0930\u094d\u091a\u0947 \u0915\u0940 \u095e\u094b\u091f\u094b \u0938\u0902\u0932\u0917\u094d\u0928)"}
 };
 const PHONE="918957785613";
 
@@ -504,42 +511,88 @@ const CHECKUPS=[
  {en:"Comprehensive Platinum Full Body Checkup",hi:"\u0938\u092e\u094d\u092a\u0942\u0930\u094d\u0923 \u092a\u094d\u0932\u0948\u091f\u093f\u0928\u092e \u092b\u0941\u0932 \u092c\u0949\u0921\u0940 \u091c\u093e\u0901\u091a",tests:90,price:3999,mrp:7998}
 ];
 const PRODUCTS=[
- {id:1,name:"Paracetamol 500mg Tablet",pack:"strip of 15 tablets",mrp:35,price:33,rx:false,rate:4.3,rev:128,cat:"fever"},
- {id:2,name:"Dolo 650 Tablet",pack:"strip of 15 tablets",mrp:34,price:32,rx:false,rate:4.5,rev:3669,cat:"fever"},
- {id:3,name:"Azithromycin 500mg Tablet",pack:"strip of 3 tablets",mrp:120,price:108,rx:true,rate:4.2,rev:94,cat:"antibiotic"},
- {id:4,name:"Cetirizine 10mg Tablet",pack:"strip of 10 tablets",mrp:30,price:27,rx:false,rate:4.4,rev:226,cat:"allergy"},
- {id:5,name:"ORS Powder",pack:"sachet of 21.8 g",mrp:25,price:22,rx:false,rate:4.3,rev:108,cat:"hydration"},
- {id:6,name:"Pantoprazole 40mg Tablet",pack:"strip of 15 tablets",mrp:145,price:130,rx:true,rate:4.1,rev:57,cat:"acidity"},
- {id:7,name:"Cough Syrup 100ml",pack:"bottle of 100 ml",mrp:110,price:99,rx:false,rate:4.3,rev:226,cat:"cough"},
- {id:8,name:"Digital Thermometer",pack:"1 piece",mrp:250,price:210,rx:false,rate:4.5,rev:611,cat:"devices"},
- {id:9,name:"Hand Sanitizer 500ml",pack:"bottle of 500 ml",mrp:180,price:150,rx:false,rate:4.2,rev:3372,cat:"hygiene"},
- {id:10,name:"Vitamin D3 60000 IU Sachet",pack:"strip of 4 sachets",mrp:90,price:80,rx:false,rate:4.5,rev:1571,cat:"supplements"},
- {id:11,name:"Glucose Powder",pack:"jar of 500 g",mrp:145,price:130,rx:false,rate:4.3,rev:1176,cat:"nutrition"},
- {id:12,name:"Adhesive Plaster (Band-Aid)",pack:"box of 100 strips",mrp:120,price:105,rx:false,rate:4.3,rev:337,cat:"firstaid"},
- {id:13,name:"Metformin 500mg Tablet",pack:"strip of 20 tablets",mrp:60,price:52,rx:true,rate:4.4,rev:352,cat:"diabetes"},
- {id:14,name:"Amlodipine 5mg Tablet",pack:"strip of 15 tablets",mrp:55,price:48,rx:true,rate:4.2,rev:128,cat:"bp"},
- {id:15,name:"Antacid Gel 170ml",pack:"bottle of 170 ml",mrp:130,price:115,rx:false,rate:4.3,rev:108,cat:"acidity"},
- {id:16,name:"Vitamin C Chewable Tablet",pack:"strip of 10 tablets",mrp:95,price:85,rx:false,rate:4.5,rev:6,cat:"supplements"}
+ {id:1,name:"AMORIV-CV 625",pack:"10x10 Tablets",mrp:2048,price:2048,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Amoxicillin & Potassium Clavulanate Tablets IP"},
+ {id:2,name:"AZIRYT-500",pack:"10X3 Tablets",mrp:790,price:790,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Azithromycin Tablets IP 500mg"},
+ {id:3,name:"CEFIHOPE 200 LB",pack:"10 x 10 Tablets",mrp:1600,price:1600,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Cefixime & Lactic Acid Bacillus Dispersible Tablets"},
+ {id:4,name:"CEFIHOPE-OF",pack:"10 x 10 Tablets",mrp:2100,price:2100,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Cefixime & Ofloxacin Tablets"},
+ {id:5,name:"DICOFLY-P",pack:"10x10 Tablets",mrp:550,price:550,rx:true,rate:0,rev:0,cat:"pain",composition:"Diclofenac Potassium, Paracetamol Tablets (50mg + 325mg)"},
+ {id:6,name:"DICOFLY-MR",pack:"10x10 Tablets",mrp:800,price:800,rx:true,rate:0,rev:0,cat:"pain",composition:"Diclofenac Potassium, Paracetamol & Chlorzoxazone Tablets"},
+ {id:7,name:"DICOFLY-SP",pack:"10x10 Tablets",mrp:850,price:850,rx:true,rate:0,rev:0,cat:"pain",composition:"Diclofenac Potassium, Paracetamol & Serratiopeptidase Tablets"},
+ {id:8,name:"DRODOT-DM",pack:"10 x 10 Tablets",mrp:850,price:850,rx:true,rate:0,rev:0,cat:"pain",composition:"Drotaverine Hydrochloride & Mefenamic Acid Tablets"},
+ {id:9,name:"EFZACOR-6",pack:"10 x 10 Tablets",mrp:1500,price:1500,rx:false,rate:0,rev:0,cat:"allergy",composition:"Deflazacort Tablets 6 mg"},
+ {id:10,name:"Feroflam-XT",pack:"10 x 10 Tablets",mrp:1500,price:1500,rx:false,rate:0,rev:0,cat:"supplements",composition:"Ferrous Ascorbate, Folic Acid & Zinc Tablets"},
+ {id:11,name:"HOPCAL-CT",pack:"10x1x10 Softgel Capsules",mrp:1100,price:1100,rx:false,rate:0,rev:0,cat:"bone",composition:"Calcitriol, Calcium Carbonate & Zinc Soft Gelatin Capsules"},
+ {id:12,name:"Hopcal-K27 Gold",pack:"10x1x10 Softgel Capsules",mrp:2600,price:2600,rx:false,rate:0,rev:0,cat:"bone",composition:"Calcitriol, Calcium Carbonate, Zinc, Magnesium, Vitamin K2-7, Methylcobalamin & L-Methylfolate Softgel Capsules"},
+ {id:13,name:"HOPCAL-60K",pack:"10x1x4 Softgel Capsules",mrp:960,price:960,rx:false,rate:0,rev:0,cat:"supplements",composition:"Cholecalciferol 60,000 IU Softgel Capsules"},
+ {id:14,name:"ITOFLAM-200",pack:"10x1x10 Capsules",mrp:2490,price:2490,rx:false,rate:0,rev:0,cat:"antifungal",composition:"Itraconazole Capsules IP 200 mg"},
+ {id:15,name:"LEVUP-5",pack:"10x10 Tablets",mrp:450,price:450,rx:true,rate:0,rev:0,cat:"allergy",composition:"Levocetirizine Dihydrochloride Tablets IP 5mg"},
+ {id:16,name:"LEVUP-M",pack:"10x10 Tablets",mrp:1200,price:1200,rx:true,rate:0,rev:0,cat:"allergy",composition:"Montelukast Sodium & Levocetirizine Hydrochloride Tablets IP"},
+ {id:17,name:"LYCOGRASS",pack:"10x1x10 Softgel Capsules",mrp:1500,price:1500,rx:false,rate:0,rev:0,cat:"supplements",composition:"Grape Seed Extract, Lycopene with Lutein, Vitamins, Selenium & Zinc Soft Gelatin Capsules"},
+ {id:18,name:"MULTISTORY-G",pack:"10x1x10 Softgel Capsules",mrp:920,price:920,rx:false,rate:0,rev:0,cat:"supplements",composition:"Softgel Capsules of Ginseng with Vitamin, Minerals & Antioxidant"},
+ {id:19,name:"Nervacob-OD",pack:"10 x 10 Capsules",mrp:1800,price:1800,rx:false,rate:0,rev:0,cat:"neuro",composition:"Methylcobalamin, Alpha Lipoic Acid, Pyridoxine, Folic acid & Thiamine Capsules"},
+ {id:20,name:"NIMVEX-P",pack:"10 x 10 Tablets",mrp:490,price:490,rx:true,rate:0,rev:0,cat:"pain",composition:"Nimesulide & Paracetamol Tablets"},
+ {id:21,name:"OFLIXA-200",pack:"10x10 Tablets",mrp:950,price:950,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Ofloxacin Tablets IP 200 mg"},
+ {id:22,name:"OFLIXA-OZ",pack:"10x10 Tablets",mrp:1500,price:1500,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Ofloxacin 200mg + Ornidazole 500mg Tablets IP"},
+ {id:23,name:"OMNOX-20",pack:"10x10 Capsules",mrp:280,price:280,rx:true,rate:0,rev:0,cat:"acidity",composition:"Omeprazole (Enteric Coated) Capsules IP 20 mg"},
+ {id:24,name:"OMNOX-D",pack:"10x10 Capsules",mrp:500,price:500,rx:true,rate:0,rev:0,cat:"acidity",composition:"Omeprazole (Enteric Coated) & Domperidone Capsules IP"},
+ {id:25,name:"PANTOGAIN-DSR",pack:"10x10 Capsules",mrp:1200,price:1200,rx:true,rate:0,rev:0,cat:"acidity",composition:"Pantoprazole Sodium Gastro-resistant & Domperidone Prolonged-release Capsules IP"},
+ {id:26,name:"PARAHOPE 650",pack:"10x15 Tablets",mrp:305,price:305,rx:false,rate:0,rev:0,cat:"fever",composition:"Paracetamol Tablets IP 650 mg"},
+ {id:27,name:"Rabclass-DSR",pack:"10 x 10 Capsules",mrp:1100,price:1100,rx:true,rate:0,rev:0,cat:"acidity",composition:"Rabeprazole Sodium (Enteric Coated) & Domperidone (Sustained Release) Capsules"},
+ {id:28,name:"WEPOD-200",pack:"10 x 10 Tablets",mrp:2200,price:2200,rx:true,rate:0,rev:0,cat:"antibiotic",composition:"Cefpodoxime Dispersible Tablets 200 mg"},
+ {id:29,name:"ZIVODOL-MR",pack:"10 x 10 Tablets",mrp:850,price:850,rx:true,rate:0,rev:0,cat:"pain",composition:"Aceclofenac, Paracetamol & Chlorzoxazone Tablets"},
+ {id:30,name:"Zivodol-P",pack:"10 x 10 Tablets",mrp:650,price:650,rx:true,rate:0,rev:0,cat:"pain",composition:"Aceclofenac 100mg + Paracetamol 325mg Tablets IP"},
+ {id:31,name:"ZIVODOL-P 750",pack:"10 x 10 Tablets",mrp:750,price:750,rx:true,rate:0,rev:0,cat:"pain",composition:"Aceclofenac & Paracetamol Tablets IP"},
+ {id:32,name:"Zivodol-SP",pack:"10 x 10 Tablets",mrp:1200,price:1200,rx:true,rate:0,rev:0,cat:"pain",composition:"Aceclofenac, Paracetamol & Serratiopeptidase Tablets"},
+ {id:33,name:"CEFROXIN-1",pack:"1000mg",mrp:71,price:71,rx:true,rate:0,rev:0,cat:"injection",composition:"Ceftriaxone Injection I.P. 1000mg"},
+ {id:34,name:"CEFROXIN-SB",pack:"1000mg + 500mg",mrp:180,price:180,rx:true,rate:0,rev:0,cat:"injection",composition:"Ceftriaxone & Sulbactam For Injection I.P."},
+ {id:35,name:"NERVACOB 1500",pack:"5x2 ml Ampoule",mrp:45,price:45,rx:false,rate:0,rev:0,cat:"injection",composition:"Methylcobalamin Injection"},
+ {id:36,name:"NERVACOB 2500",pack:"5x2 ml Ampoule",mrp:75,price:75,rx:false,rate:0,rev:0,cat:"injection",composition:"Methylcobalamin Injection 2500mcg"},
+ {id:37,name:"PANTOGAIN-40 IV",pack:"40mg",mrp:57,price:57,rx:true,rate:0,rev:0,cat:"injection",composition:"Pantoprazole for Injection 40mg"},
+ {id:38,name:"AMORIV-CV kids",pack:"3 gm/30 ml",mrp:69,price:69,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Amoxicillin & Potassium Clavulanate Oral Suspension IP 228.5mg"},
+ {id:39,name:"CEFIHOPE-50 KIDS",pack:"10gm/30 ml",mrp:54.5,price:54.5,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Cefixime Oral Suspension I.P."},
+ {id:40,name:"COLDNOX SUSPENSION KIDS",pack:"60ml",mrp:75,price:75,rx:false,rate:0,rev:0,cat:"pediatric",composition:"Paracetamol, Phenylephrine & Chlorpheniramine Maleate Suspension"},
+ {id:41,name:"IBULAC KIDS",pack:"60 ml",mrp:75,price:75,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Ibuprofen & Paracetamol Suspension"},
+ {id:42,name:"LEVUP-M KIDS",pack:"60 ml",mrp:85,price:85,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Levocetirizine Dihydrochloride & Montelukast Sodium Syrup"},
+ {id:43,name:"OFLIXA-M",pack:"60ml",mrp:85,price:85,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Ofloxacin, Metronidazole Benzoate & Simethicone Oral Suspension"},
+ {id:44,name:"PARAHOPE-M KIDS",pack:"60ml",mrp:80,price:80,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Paracetamol & Mefenamic Acid Suspension IP"},
+ {id:45,name:"WEPOD-50 KIDS",pack:"10gm/30 ml",mrp:90,price:90,rx:true,rate:0,rev:0,cat:"pediatric",composition:"Cefpodoxime Oral Suspension IP"},
+ {id:46,name:"Feroflam-XT Syrup",pack:"200 ml",mrp:155,price:155,rx:false,rate:0,rev:0,cat:"syrup",composition:"Ferrous Fumarate, Folic Acid & Zinc Syrup"},
+ {id:47,name:"HUNGERGAIN Syrup",pack:"200 ml",mrp:160,price:160,rx:false,rate:0,rev:0,cat:"syrup",composition:"Cyproheptadine Hydrochloride & Tricholine Citrate Syrup"},
+ {id:48,name:"KIWICOF-A",pack:"100 ml",mrp:95,price:95,rx:true,rate:0,rev:0,cat:"cough",composition:"Ambroxol, Terbutaline Sulphate, Guaiphenesin & Menthol Syrup"},
+ {id:49,name:"KIWICOF-BR",pack:"100 ml",mrp:95,price:95,rx:true,rate:0,rev:0,cat:"cough",composition:"Bromhexine, Terbutaline and Guaiphenesin Mentholated Syrup"},
+ {id:50,name:"KIWICOF-D",pack:"100 ml",mrp:98,price:98,rx:false,rate:0,rev:0,cat:"cough",composition:"Dextromethorphan HBR, Phenylephrine HCl & Chlorpheniramine Maleate Syrup"},
+ {id:51,name:"Kiwicof-LS",pack:"100 ml",mrp:110,price:110,rx:true,rate:0,rev:0,cat:"cough",composition:"Levosalbutamol, Ambroxol Hydrochloride & Guaiphenesin Syrup"},
+ {id:52,name:"Livar-X Syrup",pack:"200 ml",mrp:190,price:190,rx:false,rate:0,rev:0,cat:"syrup",composition:"Silymarin, L-ornithine L-Aspartate With Vitamin B-Complex Syrup"},
+ {id:53,name:"LYCOGRASS Syrup",pack:"200 ml",mrp:160,price:160,rx:false,rate:0,rev:0,cat:"supplements",composition:"Lycopene, Cyanocobalamin, Multivitamin, Multiminerals Syrup"},
+ {id:54,name:"MULTISTORY Syrup",pack:"200 ml",mrp:150,price:150,rx:false,rate:0,rev:0,cat:"supplements",composition:"Multivitamin, Multimineral & Antioxidant Syrup"},
+ {id:55,name:"MULTISTORY-L Syrup",pack:"200 ml",mrp:170,price:170,rx:false,rate:0,rev:0,cat:"supplements",composition:"Multivitamin with L-Lysine & B-Complex Syrup"},
+ {id:56,name:"PLATE GLOW SYRUP",pack:"200 ml",mrp:240,price:240,rx:false,rate:0,rev:0,cat:"ayurveda",composition:"Giloy, Tulsi & Papaya Leaves"},
+ {id:57,name:"UTILAX Uterine Syrup",pack:"200 ml",mrp:160,price:160,rx:false,rate:0,rev:0,cat:"ayurveda",composition:"Ayurvedic uterine syrup enriched with Ashoka, Lodhra, Shatavari, Gokhru & Aloe Vera"},
+ {id:58,name:"Zyme Apple Syrup",pack:"200 ml",mrp:160,price:160,rx:false,rate:0,rev:0,cat:"syrup",composition:"Fungal Diastase, Pepsin with B-Complex Syrup"},
+ {id:59,name:"ORTHOGRASS Pain Oil",pack:"50 ML",mrp:120,price:120,rx:false,rate:0,rev:0,cat:"ayurveda",composition:"Anti-inflammatory & Muscle Relaxant Ayurvedic Pain Relief Oil"}
 ];
 const CATS=[
- {k:"vitamin",en:"Vitamins & Supplements",hi:"\u0935\u093f\u091f\u093e\u092e\u093f\u0928 \u0935 \u0938\u092a\u094d\u0932\u0940\u092e\u0947\u0902\u091f"},
- {k:"drink",en:"Nutritional Drinks",hi:"\u092a\u094b\u0937\u0923 \u092a\u0947\u092f"},
- {k:"skin",en:"Skin Care",hi:"\u0938\u094d\u0915\u093f\u0928 \u0915\u0947\u092f\u0930"},
- {k:"hair",en:"Hair Care",hi:"\u092c\u093e\u0932\u094b\u0902 \u0915\u0940 \u0926\u0947\u0916\u092d\u093e\u0932"},
- {k:"ayu",en:"Ayurveda",hi:"\u0906\u092f\u0941\u0930\u094d\u0935\u0947\u0926"},
- {k:"pain",en:"Pain Relief",hi:"\u0926\u0930\u094d\u0926 \u0928\u093f\u0935\u093e\u0930\u0915"},
- {k:"homeo",en:"Homeopathy",hi:"\u0939\u094b\u092e\u093f\u092f\u094b\u092a\u0948\u0925\u0940"},
- {k:"baby",en:"Baby Care",hi:"\u0936\u093f\u0936\u0941 \u0926\u0947\u0916\u092d\u093e\u0932"},
- {k:"device",en:"Health Devices",hi:"\u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0909\u092a\u0915\u0930\u0923"},
- {k:"wellness",en:"Wellness",hi:"\u0935\u0947\u0932\u0928\u0947\u0938"},
- {k:"firstaid",en:"First Aid",hi:"\u092a\u094d\u0930\u093e\u0925\u092e\u093f\u0915 \u091a\u093f\u0915\u093f\u0924\u094d\u0938\u093e"},
- {k:"pill",en:"All Medicines",hi:"\u0938\u092d\u0940 \u0926\u0935\u093e\u0907\u092f\u093e\u0901"}
+ {k:"antibiotic",en:"Antibiotics",hi:"एंटीबायोटिक"},
+ {k:"pain",en:"Pain & Inflammation",hi:"दर्द व सूजन"},
+ {k:"acidity",en:"Acidity & Digestion",hi:"एसिडिटी व पाचन"},
+ {k:"allergy",en:"Allergy & Respiratory",hi:"एलर्जी व श्वास"},
+ {k:"fever",en:"Fever",hi:"बुखार"},
+ {k:"cough",en:"Cough & Cold",hi:"खांसी व जुकाम"},
+ {k:"pediatric",en:"Paediatric",hi:"बाल रोग"},
+ {k:"syrup",en:"Syrups & Tonics",hi:"सिरप व टॉनिक"},
+ {k:"supplements",en:"Vitamins & Supplements",hi:"विटामिन व सप्लीमेंट"},
+ {k:"bone",en:"Bone & Calcium",hi:"हड्डी व कैल्शियम"},
+ {k:"neuro",en:"Nerve & Neuro",hi:"नस व न्यूरो"},
+ {k:"injection",en:"Injections",hi:"इंजेक्शन"},
+ {k:"antifungal",en:"Antifungal",hi:"एंटीफंगल"},
+ {k:"ayurveda",en:"Ayurveda",hi:"आयुर्वेद"}
 ];
 
 /* ================== STATE ================== */
 let lang=localStorage.getItem("rudhra_lang")||"en";
 let cart={}; try{cart=JSON.parse(localStorage.getItem("rudhra_cart")||"{}");}catch(e){cart={};}
 let query="";
+let activeCat="all";
 const t=k=>(T[lang]&&T[lang][k])||T.en[k]||"";
 function save(){try{localStorage.setItem("rudhra_cart",JSON.stringify(cart));}catch(e){}}
 const fmt=n=>"\u20b9"+n.toLocaleString("en-IN");
@@ -553,7 +606,7 @@ function setLang(l){
   document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.getAttribute("data-i18n")));
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>el.placeholder=t(el.getAttribute("data-i18n-ph")));
   document.title=(l==="hi")?"\u0936\u094d\u0930\u0940 \u0930\u0941\u0926\u094d\u0930 \u092e\u0947\u0921\u093f\u0915\u0932 \u090f\u091c\u0947\u0902\u0938\u0940\u095b \u2014 \u092d\u0930\u094b\u0938\u0947\u092e\u0902\u0926 \u0911\u0928\u0932\u093e\u0907\u0928 \u092b\u093e\u0930\u094d\u092e\u0947\u0938\u0940":"Shree Rudra Medical Agencies \u2014 Trusted Online Pharmacy";
-  buildConcerns();buildCheckups();buildCats();renderProducts();updateCart();
+  buildConcerns();buildCheckups();buildCats();buildCatFilter();renderProducts();updateCart();
 }
 
 /* ================== BUILD SECTIONS ================== */
@@ -579,27 +632,37 @@ function buildCats(){
 }
 function renderProducts(){
   const list=PRODUCTS.filter(p=>{
-    if(!query) return true;
-    const q=query.toLowerCase();
-    return p.name.toLowerCase().includes(q)||p.cat.includes(q)||p.pack.toLowerCase().includes(q);
+    const okCat = activeCat==="all" || p.cat===activeCat;
+    const q=query.trim().toLowerCase();
+    const okQ = !q || p.name.toLowerCase().includes(q) || p.cat.includes(q) || (p.composition||"").toLowerCase().includes(q) || p.pack.toLowerCase().includes(q);
+    return okCat && okQ;
   });
   const sub=document.getElementById("shopSub");
-  sub.textContent = query ? (t("resultFor")+' "'+query+'" \u00b7 '+list.length+" "+t("products")) : (PRODUCTS.length+" "+t("products")+" \u00b7 "+t("getBy"));
-  document.getElementById("productRow").innerHTML = list.length? list.map(p=>{
-    const off=Math.round((1-p.price/p.mrp)*100);
-    return `<div class="pcard">
+  sub.textContent = (query||activeCat!=="all") ? (list.length+" "+t("products")) : (PRODUCTS.length+" "+t("products")+" \u00b7 "+t("getBy"));
+  const row=document.getElementById("productRow");
+  row.innerHTML = list.length? list.map(p=>{
+    const off = p.mrp>p.price ? Math.round((1-p.price/p.mrp)*100) : 0;
+    const ttl = (p.composition||"").replace(/"/g,"");
+    return `<div class="pcard" title="${ttl}">
       <div class="img">${p.rx?'<span class="rx">Rx</span>':''}${ic("pill",1.4)}</div>
       <div class="body">
         <h4>${p.name}</h4>
         <div class="pack">${p.pack}</div>
-        <span class="rating">${star()} ${p.rate} (${p.rev})</span>
-        <div class="pr"><span class="p">${fmt(p.price)}</span><span class="m">${fmt(p.mrp)}</span><span class="d">${off}% ${t("off")}</span></div>
+        ${p.rate>0?`<span class="rating">${star()} ${p.rate} (${p.rev})</span>`:''}
+        <div class="pr"><span class="p">${fmt(p.price)}</span>${off>0?`<span class="m">${fmt(p.mrp)}</span><span class="d">${off}% ${t("off")}</span>`:''}</div>
         <div class="getby">${ic("truck",2)} ${t("getBy")}</div>
         <button class="add ${cart[p.id]?"done":""}" data-id="${p.id}">${cart[p.id]?t("inCart")+" ("+cart[p.id]+")":t("add")}</button>
       </div>
     </div>`;
   }).join("") : `<div style="padding:30px;color:var(--muted)">${lang==="hi"?"\u0915\u0941\u091b \u0928\u0939\u0940\u0902 \u092e\u093f\u0932\u093e\u0964":"Nothing found."}</div>`;
-  document.getElementById("productRow").querySelectorAll(".add").forEach(b=>b.onclick=()=>addToCart(+b.dataset.id));
+  row.querySelectorAll(".add").forEach(b=>b.onclick=()=>addToCart(+b.dataset.id));
+}
+
+function buildCatFilter(){
+  const bar=document.getElementById("catFilter"); if(!bar) return;
+  const items=[{k:"all",label:(lang==="hi"?"\u0938\u092d\u0940":"All")}].concat(CATS.map(c=>({k:c.k,label:c[lang]})));
+  bar.innerHTML=items.map(c=>`<button class="cchip ${activeCat===c.k?'active':''}" data-k="${c.k}">${c.label}</button>`).join("");
+  bar.querySelectorAll(".cchip").forEach(bt=>bt.onclick=()=>{activeCat=bt.dataset.k;buildCatFilter();renderProducts();});
 }
 
 /* ================== CART ================== */
