@@ -238,6 +238,24 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
 /* toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:200;opacity:0;transition:all .3s;box-shadow:var(--shadow-lg);max-width:90vw}
 .toast.show{transform:translateX(-50%);opacity:1}
+.city select{border:none;background:transparent;font-family:inherit;font-size:13.5px;font-weight:700;color:#46575e;outline:none;cursor:pointer;max-width:120px}
+.modal-ov{position:fixed;inset:0;background:rgba(15,42,40,.55);z-index:300;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:85vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff}
+.modal-h h3{font-size:17px;font-weight:800}
+.modal-h button{background:none;border:none;font-size:26px;line-height:1;color:var(--muted);cursor:pointer}
+.modal-b{padding:18px 20px 22px;font-size:14px;color:#2b4038;line-height:1.6}
+.modal-b h4{margin:14px 0 6px;color:var(--g-dark);font-size:15px}
+.modal-b p{margin-bottom:10px}
+.modal-b ul{margin:0 0 10px 18px}
+.modal-b li{margin-bottom:5px}
+.modal-b .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.modal-b .mbtn{flex:1;min-width:140px;text-align:center;background:var(--g);color:#fff;border:none;border-radius:10px;padding:12px;font-weight:800;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+.modal-b .mbtn.alt{background:#0B6BB0}
+.mfield{margin-bottom:12px}
+.mfield label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:5px}
+.mfield input{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-family:inherit;font-size:14px}
 .installbtn{display:none;align-items:center;gap:7px;background:#0B6BB0;color:#fff;border:none;border-radius:9px;padding:9px 13px;font-weight:800;font-size:13px;font-family:inherit;cursor:pointer}
 .installbtn:hover{background:#084F84}
 .installbtn svg{width:16px;height:16px}
@@ -310,12 +328,12 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
       <span><b>Shree<span> Rudra</span></b><small>Medical Agencies</small></span>
     </a>
     <nav class="mainnav">
-      <a href="#shop" class="active" data-i18n="navMed">Medicines</a>
+      <a href="#shop" class="active" data-i18n="navMed" onclick="showAll()">Medicines</a>
       <a href="#checkups" data-i18n="navLab">Lab Tests</a>
-      <a href="#" onclick="return false" data-i18n="navDoc">Consult Doctors</a>
+      <a href="#" data-i18n="navDoc" onclick="event.preventDefault();openConsult()">Consult Doctors</a>
       <a href="#concerns" data-i18n="navConcern">Health Concerns</a>
-      <a href="#cats" data-i18n="navAyu">Ayurveda</a>
-      <a href="#shop" data-i18n="navOffers">Offers</a>
+      <a href="#cats" data-i18n="navAyu" onclick="event.preventDefault();showCategory('ayurveda')">Ayurveda</a>
+      <a href="#shop" data-i18n="navOffers" onclick="event.preventDefault();showOffers()">Offers</a>
     </nav>
     <div class="hright">
       <div class="lang">
@@ -323,7 +341,7 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
         <button id="lHi" onclick="setLang('hi')">&#2361;&#2367;&#2306;</button>
       </div>
       <button id="installBtn" class="installbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Install App</button>
-      <a href="#" onclick="return false" class="hlink" data-i18n="login">Login</a>
+      <a href="#" class="hlink" id="loginLink" onclick="event.preventDefault();openLogin()">Login</a>
       <button class="cartbtn" onclick="openCart()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L23 7H6"/></svg>
         <span data-i18n="cart">Cart</span>
@@ -333,7 +351,7 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
   </div>
   <div class="searchrow">
     <div class="wrap">
-      <div class="city"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="enterCity">Enter your city</span></div>
+      <div class="city"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><select id="citySel" onchange="setCity(this.value)"><option>Jhansi</option><option>Gumnawara</option><option>Jhansi Cantt</option></select></div>
       <div class="sbox">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.4-3.4"/></svg>
         <input id="search" type="text" data-i18n-ph="searchPh" placeholder="Search for medicines and health products">
@@ -396,7 +414,7 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
   <section class="blk" id="checkups">
     <div class="blk-head">
       <div><h2 data-i18n="checkupH">Full body health checkups</h2><div class="sub" data-i18n="checkupSub">Booked through partner labs &middot; home sample collection</div></div>
-      <a href="#" onclick="return false" class="seeall" data-i18n="seeAll">See all</a>
+      <a href="#shop" class="seeall" data-i18n="seeAll" onclick="showAll()">See all</a>
     </div>
     <div class="hscroll" id="checkupRow"></div>
   </section>
@@ -405,7 +423,7 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
   <section class="blk" id="shop">
     <div class="blk-head">
       <div><h2 id="shopTitle" data-i18n="shopH">Featured products</h2><div class="sub" id="shopSub"></div></div>
-      <a href="#" onclick="return false" class="seeall" data-i18n="seeAll">See all</a>
+      <a href="#shop" class="seeall" data-i18n="seeAll" onclick="showAll()">See all</a>
     </div>
     <div class="catfilter" id="catFilter"></div>
     <div class="pgrid" id="productRow"></div>
@@ -445,15 +463,15 @@ footer .brandf p{font-size:12.5px;line-height:1.5}
       </div>
       <div>
         <h6 data-i18n="footKnow">Know us</h6>
-        <a href="#" onclick="return false" data-i18n="footAboutUs">About us</a>
-        <a href="#" onclick="return false" data-i18n="footContactUs">Contact us</a>
-        <a href="#" onclick="return false" data-i18n="footCareers">Careers</a>
+        <a href="#" onclick="event.preventDefault();openInfo('about')" data-i18n="footAboutUs">About us</a>
+        <a href="#" onclick="event.preventDefault();openInfo('contact')" data-i18n="footContactUs">Contact us</a>
+        <a href="#" onclick="event.preventDefault();openInfo('careers')" data-i18n="footCareers">Careers</a>
       </div>
       <div>
         <h6 data-i18n="footPolicy">Our policies</h6>
-        <a href="#" onclick="return false" data-i18n="footPrivacy">Privacy policy</a>
-        <a href="#" onclick="return false" data-i18n="footTerms">Terms &amp; conditions</a>
-        <a href="#" onclick="return false" data-i18n="footReturn">Return policy</a>
+        <a href="#" onclick="event.preventDefault();openInfo('privacy')" data-i18n="footPrivacy">Privacy policy</a>
+        <a href="#" onclick="event.preventDefault();openInfo('terms')" data-i18n="footTerms">Terms &amp; conditions</a>
+        <a href="#" onclick="event.preventDefault();openInfo('return')" data-i18n="footReturn">Return policy</a>
       </div>
       <div>
         <h6 data-i18n="footContact">Contact</h6>
@@ -784,6 +802,39 @@ setLang(lang);
   if(bc) bc.addEventListener('click',function(){ if(banner) banner.style.display='none'; try{localStorage.setItem('srm_ib','1');}catch(e){} });
   window.addEventListener('appinstalled',function(){ if(btn) btn.style.display='none'; if(banner) banner.style.display='none'; });
 })();
+</script>
+
+<div class="modal-ov" id="modalOv" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-h"><h3 id="modalTitle"></h3><button onclick="closeModal()" aria-label="Close">&times;</button></div>
+    <div class="modal-b" id="modalBody"></div>
+  </div>
+</div>
+<script>
+var INFO={
+ about:'<h4>About Shree Rudra Medical Agencies</h4><p>We are a licensed pharmacy in Gumnawara, Jhansi, serving families, clinics and pharmacies with genuine, quality-assured medicines from the Grasshopper range.</p><p>Our promise is simple: genuine medicines, honest prices, and fast home delivery across Jhansi &mdash; even in an emergency.</p><h4>Why people trust us</h4><ul><li>Genuine, WHO-GMP quality products</li><li>Registered pharmacist checks every order</li><li>Home delivery across Jhansi</li><li>Order easily on WhatsApp or call</li></ul>',
+ contact:'<h4>Contact us</h4><p><b>Shree Rudra Medical Agencies</b><br>Near Shri Ji Hospital, Opposite Badi Mata Mandir, Gumnawara, Jhansi (U.P.)</p><p><b>Phone:</b> +91 89577 85613 &nbsp;|&nbsp; +91 81129 16823<br><b>Timing:</b> Every day, 9:00 AM &ndash; 10:00 PM</p><div class="btnrow"><a class="mbtn" href="https://wa.me/918957785613" target="_blank">WhatsApp par message</a><a class="mbtn alt" href="tel:+918957785613">Call karein</a></div>',
+ careers:'<h4>Careers</h4><p>We are growing in Jhansi and sometimes need delivery partners and pharmacy helpers.</p><p>If you are interested, send your name and experience on WhatsApp and we will get back to you.</p><div class="btnrow"><a class="mbtn" href="https://wa.me/918957785613?text=Hello%2C%20I%20want%20to%20apply%20for%20a%20job%20at%20Shree%20Rudra%20Medical%20Agencies" target="_blank">Apply on WhatsApp</a></div>',
+ privacy:'<h4>Privacy policy</h4><p>We respect your privacy. This website collects only what is needed to take and deliver your order.</p><ul><li><b>What we collect:</b> your name, phone number, delivery address and order details &mdash; only when you send an order or request a call back.</li><li><b>How we use it:</b> to prepare, confirm and deliver your order, and to contact you about it.</li><li><b>Sharing:</b> we do not sell your data. Order details are shared only with our delivery staff.</li><li><b>Storage:</b> your cart and login name are stored in your own browser (localStorage), not on a server.</li><li><b>Prescription photos:</b> used only to verify and prepare your medicines.</li></ul><p>To delete your details, contact us on WhatsApp and we will remove them.</p>',
+ terms:'<h4>Terms &amp; conditions</h4><ul><li>This website is for placing medicine orders with Shree Rudra Medical Agencies, Jhansi.</li><li>Prescription (Rx) medicines are dispensed only against a valid doctor&rsquo;s prescription.</li><li>Product availability, batch and expiry are confirmed by our pharmacist before dispatch.</li><li>Prices shown are MRP and may change without notice.</li><li>The final sale takes place at our licensed pharmacy as per applicable law.</li></ul>',
+ return:'<h4>Return policy</h4><ul><li>Medicines once sold are generally not returnable as per pharmacy rules.</li><li>If you receive a wrong, damaged or expired item, contact us within 24 hours on WhatsApp with a photo &mdash; we will replace it or refund you.</li><li>Refunds for approved cases are processed within 3&ndash;5 working days.</li></ul>'
+};
+function openModal(title,html){document.getElementById('modalTitle').innerHTML=title;document.getElementById('modalBody').innerHTML=html;document.getElementById('modalOv').classList.add('open');}
+function closeModal(){document.getElementById('modalOv').classList.remove('open');}
+function openInfo(k){var t={about:'About us',contact:'Contact us',careers:'Careers',privacy:'Privacy policy',terms:'Terms & conditions',return:'Return policy'}[k];openModal(t,INFO[k]);}
+function openConsult(){openModal('Consult a doctor','<h4>Talk to our pharmacist</h4><p>Not sure which medicine you need, or have a question about a prescription? Message or call us &mdash; our pharmacist will guide you.</p><p style="font-size:12.5px;color:var(--muted)">For emergencies, please call immediately.</p><div class="btnrow"><a class="mbtn" href="https://wa.me/918957785613?text=Hello%2C%20I%20need%20help%20from%20the%20pharmacist" target="_blank">WhatsApp par poochhein</a><a class="mbtn alt" href="tel:+918957785613">Call karein</a></div>');}
+function getUser(){try{return JSON.parse(localStorage.getItem('srm_user')||'null');}catch(e){return null;}}
+function openLogin(){var u=getUser();if(u){openAccount(u);return;}openModal('Login / Sign up','<div class="mfield"><label>Your name</label><input id="lgName" placeholder="e.g. Rahul Sharma"></div><div class="mfield"><label>Mobile number</label><input id="lgPhone" type="tel" placeholder="10-digit mobile number"></div><div class="btnrow"><button class="mbtn" onclick="doLogin()">Save &amp; continue</button></div><p style="font-size:12px;color:var(--muted);margin-top:10px">Aapki detail sirf isi device par save hoti hai &mdash; order jaldi bharne ke liye.</p>');}
+function doLogin(){var n=(document.getElementById('lgName').value||'').trim();var p=(document.getElementById('lgPhone').value||'').trim();if(!n||p.replace(/\D/g,'').length<10){toast('Naam aur 10-digit number daalein');return;}localStorage.setItem('srm_user',JSON.stringify({name:n,phone:p}));updateLoginUI();closeModal();toast('Welcome, '+n.split(' ')[0]);}
+function openAccount(u){openModal('My account','<p><b>'+u.name+'</b><br>'+u.phone+'</p><p style="font-size:12.5px;color:var(--muted)">Aapki detail isi device par save hai.</p><div class="btnrow"><button class="mbtn" onclick="logout()">Logout</button></div>');}
+function logout(){localStorage.removeItem('srm_user');updateLoginUI();closeModal();toast('Logged out');}
+function updateLoginUI(){var u=getUser();var el=document.getElementById('loginLink');if(!el)return;if(u){el.textContent='Hi, '+u.name.split(' ')[0];}else{el.textContent=(typeof lang!=='undefined'&&lang==='hi')?'\u0932\u0949\u0917\u093f\u0928':'Login';}}
+function showAll(){try{activeCat='all';query='';var s=document.getElementById('search');if(s)s.value='';buildCatFilter();renderProducts();}catch(e){}var el=document.getElementById('shop');if(el)el.scrollIntoView({behavior:'smooth'});}
+function showCategory(k){try{activeCat=k;query='';var s=document.getElementById('search');if(s)s.value='';buildCatFilter();renderProducts();}catch(e){}var el=document.getElementById('shop');if(el)el.scrollIntoView({behavior:'smooth'});}
+function showOffers(){var el=document.getElementById('checkups');if(el)el.scrollIntoView({behavior:'smooth'});toast('Offers: health checkup packages par 50% tak off');}
+function setCity(v){try{localStorage.setItem('srm_city',v);}catch(e){}toast('Delivering to: '+v);}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+updateLoginUI();
 </script>
 </body>
 </html>
